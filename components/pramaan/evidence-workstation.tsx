@@ -18,12 +18,10 @@ import {
   AlertOctagon,
   AlertTriangle,
   Info,
-  CheckCircle2,
   ShieldCheck,
   QrCode,
   Layers,
   Lock,
-  Sparkles,
   Scale,
   FileWarning,
   SlidersHorizontal,
@@ -55,7 +53,6 @@ export function EvidenceWorkstation({
   const handleSelectFlag = (flag: FlaggedFinding) => {
     setActiveFlagId(flag.id)
     setActiveBoxId(flag.targetBoxId)
-    // Automatically switch to ELA X-Ray if user clicks Flag 2 (ELA Forgery) for dramatic UX, while keeping toggle accessible
     if (flag.id === 'flag-2') {
       setSelectedDoc('fire-noc')
     }
@@ -65,7 +62,7 @@ export function EvidenceWorkstation({
     setIsLaserScanning(true)
     setTimeout(() => {
       setIsLaserScanning(false)
-    }, 3400)
+    }, 2800)
   }
 
   const activeFlag =
@@ -76,50 +73,51 @@ export function EvidenceWorkstation({
     {
       id: 'fire-noc',
       label: 'Fire_Safety_NOC_2026.pdf',
-      tag: '2 CRIT',
+      tag: '2 Discrepancies',
     },
     {
       id: 'architect-cert',
       label: 'Architect_Land_Cert.pdf',
-      tag: '1 WARN',
+      tag: '1 Warning',
     },
     {
       id: 'affidavit',
       label: 'Affidavit_Format_2.pdf',
-      tag: 'API 504',
+      tag: 'API Fallback',
     },
   ]
 
   return (
-    <div className="space-y-6 pb-24">
+    <div className="space-y-6">
       {/* Institution Context Header Bar */}
-      <div className="rounded-2xl bg-white backdrop-blur-2xl border border-slate-200 border-t-white/25 px-5 py-4 flex flex-col lg:flex-row lg:items-center justify-between gap-4 shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
+      <div className="rounded-xl bg-white border border-[#E2E8F0] px-5 py-4 flex flex-col lg:flex-row lg:items-center justify-between gap-4 shadow-xs">
         <div className="flex flex-wrap items-center gap-3">
-          <span className="px-3 py-1 rounded-lg bg-orange-500/15 border border-orange-400/40 font-mono text-xs font-bold text-orange-300">
+          <span className="px-2.5 py-1 rounded-md bg-blue-50 border border-blue-200 font-mono text-xs font-bold text-[#2563EB]">
             PID: {application.pid}
           </span>
           <div>
-            <h2 className="text-base sm:text-lg font-bold text-slate-800 flex flex-wrap items-center gap-2">
+            <h2 className="text-base sm:text-lg font-bold text-[#1E293B] flex flex-wrap items-center gap-2">
               <span>{application.name}, {application.city}</span>
-              <span className="text-slate-500">•</span>
-              <span className="text-orange-300 text-sm font-medium">
-                Category: {application.category}
+              <span className="text-[#CBD5E1]">•</span>
+              <span className="text-[#64748B] text-sm font-normal">
+                Category: <strong className="text-[#1E293B] font-medium">{application.category}</strong>
               </span>
             </h2>
-            <p className="text-xs text-slate-400 font-mono mt-0.5">
-              Program: {application.programFocus} | Cert Ref: {application.certificateData.certNumber}
+            <p className="text-xs text-[#64748B] mt-0.5">
+              Program: {application.programFocus} | Cert Ref: <span className="font-mono">{application.certificateData.certNumber}</span>
             </p>
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-3">
+        <div className="flex flex-wrap items-center gap-2.5">
           <StatutoryBadge state={application.status} size="md" />
           <button
             onClick={triggerLaserScan}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-slate-950 font-mono text-xs font-bold shadow-[0_0_20px_rgba(6,182,212,0.45)] hover:brightness-110 transition-all"
+            disabled={isLaserScanning}
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs font-semibold shadow-xs transition-colors disabled:opacity-60"
           >
             <ScanLine className={`w-4 h-4 ${isLaserScanning ? 'animate-spin' : ''}`} />
-            <span>{isLaserScanning ? 'Running Deep Scrutiny...' : 'Run AI Deep Scrutiny'}</span>
+            <span>{isLaserScanning ? 'Scanning Document...' : 'Run OCR Scan'}</span>
           </button>
         </div>
       </div>
@@ -129,34 +127,34 @@ export function EvidenceWorkstation({
         {/* LEFT PANE (5 Columns): Cross-Document Entity Graph & Flagged Findings */}
         <div className="lg:col-span-5 space-y-5">
           {/* 4-Source Cross-Document Entity Comparison Matrix */}
-          <div className="rounded-3xl bg-white backdrop-blur-2xl border border-slate-200 border-t-white/25 p-5 shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
+          <div className="rounded-xl bg-white border border-[#E2E8F0] p-5 shadow-xs">
             <div className="flex items-center justify-between gap-2 mb-3">
               <div>
-                <h3 className="text-sm font-bold text-slate-800 flex items-center gap-2">
-                  <Layers className="w-4 h-4 text-orange-400" />
-                  Cross-Document Entity Reconciliation Graph
+                <h3 className="text-sm font-bold text-[#1E293B] flex items-center gap-2">
+                  <Layers className="w-4 h-4 text-[#2563EB]" />
+                  Cross-Document Reconciliation
                 </h3>
-                <p className="text-[11px] text-slate-400">
-                  4-Source Parity Check: [Portal Form] vs [Land Cert] vs [Fire NOC] vs [AICTE DB 2025]
+                <p className="text-xs text-[#64748B]">
+                  4-Way Source Parity: Portal vs Land Cert vs Fire NOC vs AICTE DB
                 </p>
               </div>
-              <span className="px-2 py-0.5 rounded bg-orange-500/15 border border-orange-400/30 font-mono text-[10px] text-orange-300">
-                Neo4j + Drools
+              <span className="px-2 py-0.5 rounded bg-[#F1F5F9] border border-[#E2E8F0] font-mono text-[10px] text-[#64748B]">
+                Drools v4.2
               </span>
             </div>
 
-            <div className="overflow-x-auto -mx-2 px-2">
-              <table className="w-full text-left border-collapse text-[11px]">
+            <div className="overflow-x-auto rounded-lg border border-[#E2E8F0]">
+              <table className="w-full text-left border-collapse text-xs">
                 <thead>
-                  <tr className="border-b border-slate-200 font-mono text-[10px] uppercase text-slate-400">
-                    <th className="py-2 pr-2">Attribute</th>
-                    <th className="py-2 px-2">Portal Form</th>
-                    <th className="py-2 px-2">Land Cert</th>
-                    <th className="py-2 px-2">Fire NOC</th>
-                    <th className="py-2 pl-2">AICTE DB 25</th>
+                  <tr className="border-b border-[#E2E8F0] text-[11px] font-semibold text-[#64748B] bg-[#F8FAFC]">
+                    <th className="py-2.5 px-3">Attribute</th>
+                    <th className="py-2.5 px-2">Portal Form</th>
+                    <th className="py-2.5 px-2">Land Cert</th>
+                    <th className="py-2.5 px-2">Fire NOC</th>
+                    <th className="py-2.5 px-3">AICTE 2025</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-white/5 font-mono">
+                <tbody className="divide-y divide-[#E2E8F0] font-mono text-[11px]">
                   {application.entityMatrix.map((row, idx) => {
                     const isDiscrepant =
                       row.state === 'Mismatch Detected' || row.state === 'Expired'
@@ -175,32 +173,32 @@ export function EvidenceWorkstation({
                         }}
                         className={`cursor-pointer transition-colors ${
                           isSelectedRow
-                            ? 'bg-orange-500/15'
-                            : 'hover:bg-white/[0.04]'
+                            ? 'bg-blue-50/80 font-medium'
+                            : 'hover:bg-[#F8FAFC]'
                         }`}
                       >
-                        <td className="py-2.5 pr-2 font-sans">
-                          <div className="font-semibold text-slate-200">
+                        <td className="py-2.5 px-3 font-sans">
+                          <div className="font-semibold text-[#1E293B]">
                             {row.attribute}
                           </div>
-                          <div className="text-[10px] text-slate-500 font-mono">
+                          <div className="text-[10px] text-[#64748B] font-mono">
                             {row.aphClause}
                           </div>
                         </td>
-                        <td className="py-2.5 px-2 text-slate-300">
+                        <td className="py-2.5 px-2 text-[#1E293B]">
                           {row.portalForm}
                         </td>
-                        <td className="py-2.5 px-2 text-slate-300">
+                        <td className="py-2.5 px-2 text-[#64748B]">
                           {row.landCert}
                         </td>
                         <td
-                          className={`py-2.5 px-2 font-bold ${
-                            isDiscrepant ? 'text-rose-400 underline decoration-wavy' : 'text-emerald-300'
+                          className={`py-2.5 px-2 font-semibold ${
+                            isDiscrepant ? 'text-[#991B1B] bg-red-50/50' : 'text-[#166534]'
                           }`}
                         >
                           {row.fireNoc}
                         </td>
-                        <td className="py-2.5 pl-2 text-slate-400">
+                        <td className="py-2.5 px-3 text-[#64748B]">
                           {row.aicteDb2025}
                         </td>
                       </tr>
@@ -212,44 +210,41 @@ export function EvidenceWorkstation({
           </div>
 
           {/* Interactive Flagged Findings List */}
-          <div className="rounded-3xl bg-white backdrop-blur-2xl border border-slate-200 border-t-white/25 p-5 shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
+          <div className="rounded-xl bg-white border border-[#E2E8F0] p-5 shadow-xs">
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h3 className="text-sm font-bold text-slate-800 flex items-center gap-2">
-                  <FileWarning className="w-4 h-4 text-amber-400" />
-                  AI Flagged Findings &amp; APH 2024–27 Clauses
+                <h3 className="text-sm font-bold text-[#1E293B] flex items-center gap-2">
+                  <FileWarning className="w-4 h-4 text-[#D97706]" />
+                  Flagged Discrepancies &amp; Clauses
                 </h3>
-                <p className="text-[11px] text-slate-400">
-                  Click any finding card below to focus &amp; pulse its bounding box on the right certificate canvas.
+                <p className="text-xs text-[#64748B]">
+                  Select a discrepancy to inspect its bounding-box on the document viewer.
                 </p>
               </div>
-              <span className="text-xs font-mono text-orange-300">
-                {application.findings.length} Findings
+              <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-[#1E293B]">
+                {application.findings.length} Items
               </span>
             </div>
 
             <div className="space-y-3">
-              {application.findings.map((flag, index) => {
+              {application.findings.map((flag) => {
                 const isSelected = flag.id === activeFlagId
                 const severityStyles = {
                   CRITICAL:
-                    'border-rose-500/50 bg-rose-950/20 hover:border-rose-400',
+                    'border-[#FECACA] bg-[#FEF2F2] hover:border-[#F87171]',
                   WARNING:
-                    'border-amber-500/45 bg-amber-950/15 hover:border-amber-400',
-                  INFO: 'border-purple-400/45 bg-purple-950/15 hover:border-purple-300',
+                    'border-[#FDE68A] bg-[#FFFBEB] hover:border-[#FBBF24]',
+                  INFO: 'border-[#E2E8F0] bg-[#F8FAFC] hover:border-[#CBD5E1]',
                 }[flag.severity]
 
                 return (
-                  <motion.div
+                  <div
                     key={flag.id}
-                    initial={{ opacity: 0, y: 12 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.25, delay: index * 0.06 }}
                     onClick={() => handleSelectFlag(flag)}
-                    className={`relative rounded-2xl p-4 border transition-all cursor-pointer ${severityStyles} ${
+                    className={`rounded-xl p-4 border transition-all cursor-pointer ${severityStyles} ${
                       isSelected
-                        ? 'ring-2 ring-orange-400 shadow-[0_0_25px_rgba(6,182,212,0.3)] scale-[1.01]'
-                        : 'opacity-90 hover:opacity-100'
+                        ? 'ring-2 ring-[#2563EB] shadow-xs'
+                        : ''
                     }`}
                   >
                     <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
@@ -257,15 +252,15 @@ export function EvidenceWorkstation({
                         <span
                           className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase ${
                             flag.severity === 'CRITICAL'
-                              ? 'bg-rose-500 text-slate-800 shadow-[0_0_12px_rgba(244,63,94,0.6)]'
+                              ? 'bg-[#DC2626] text-white'
                               : flag.severity === 'WARNING'
-                                ? 'bg-amber-400 text-slate-950'
-                                : 'bg-purple-500/30 text-purple-200 border border-purple-400/40'
+                                ? 'bg-[#D97706] text-white'
+                                : 'bg-[#64748B] text-white'
                           }`}
                         >
                           {flag.code} • {flag.severity}
                         </span>
-                        <span className="text-[11px] font-mono text-orange-300 bg-orange-500/10 px-2 py-0.5 rounded border border-orange-400/20">
+                        <span className="text-[11px] font-mono text-[#1E293B] bg-white px-2 py-0.5 rounded border border-[#E2E8F0]">
                           {flag.clauseRef}
                         </span>
                       </div>
@@ -273,16 +268,16 @@ export function EvidenceWorkstation({
                       <StatutoryBadge state={flag.badgeState} size="sm" />
                     </div>
 
-                    <p className="text-xs font-semibold text-slate-800 leading-relaxed">
+                    <p className="text-xs font-semibold text-[#1E293B] leading-relaxed">
                       {flag.description}
                     </p>
 
-                    <div className="mt-3 pt-2.5 border-t border-slate-200 flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono">
-                      <div className="text-slate-300">
-                        <span className="text-slate-500">AI Confidence:</span>{' '}
-                        <span className="text-emerald-300 font-bold">
+                    <div className="mt-3 pt-2.5 border-t border-black/5 flex flex-wrap items-center justify-between gap-2 text-xs">
+                      <div className="text-[#64748B]">
+                        <span>Confidence:</span>{' '}
+                        <strong className="text-[#166534] font-semibold">
                           {flag.confidence}%
-                        </span>
+                        </strong>
                       </div>
                       <div className="flex items-center gap-2">
                         {flag.id === 'flag-2' && (
@@ -296,32 +291,32 @@ export function EvidenceWorkstation({
                                   : 'ela-xray'
                               )
                             }}
-                            className="px-2 py-0.5 rounded bg-rose-500/25 hover:bg-rose-500/40 text-rose-200 border border-rose-400/50 text-[10px] flex items-center gap-1"
+                            className="px-2 py-1 rounded bg-white hover:bg-rose-50 text-[#991B1B] border border-rose-200 text-xs flex items-center gap-1 font-medium shadow-2xs"
                           >
-                            <Flame className="w-3 h-3 text-rose-400" />
+                            <Flame className="w-3.5 h-3.5 text-[#DC2626]" />
                             {canvasMode === 'ela-xray'
-                              ? 'Exit ELA X-Ray'
-                              : 'Launch ELA Heatmap'}
+                              ? 'Exit ELA View'
+                              : 'Inspect ELA Heatmap'}
                           </button>
                         )}
-                        <span className="text-orange-300 flex items-center gap-1">
-                          Target: {flag.targetBoxId.replace('box-', '').toUpperCase()}
+                        <span className="text-[#2563EB] text-xs font-medium flex items-center gap-1">
+                          Box: {flag.targetBoxId.replace('box-', '').toUpperCase()}
                           <ExternalLink className="w-3 h-3" />
                         </span>
                       </div>
                     </div>
-                  </motion.div>
+                  </div>
                 )
               })}
             </div>
           </div>
         </div>
 
-        {/* RIGHT PANE (7 Columns): Interactive Document Canvas, Bounding-Box Highlighter & Forensic X-Ray */}
+        {/* RIGHT PANE (7 Columns): Interactive Document Canvas, Bounding-Box Highlighter & Forensic Tools */}
         <div className="lg:col-span-7 space-y-4">
-          <div className="rounded-3xl bg-white backdrop-blur-2xl border border-slate-200 border-t-white/25 p-4 lg:p-5 shadow-[0_8px_32px_rgba(0,0,0,0.6)]">
+          <div className="rounded-xl bg-white border border-[#E2E8F0] p-4 lg:p-5 shadow-xs">
             {/* Top Document Toolbar */}
-            <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-3 pb-4 border-b border-slate-200">
+            <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-3 pb-4 border-b border-[#E2E8F0]">
               {/* Document Switcher Tabs */}
               <div className="flex flex-wrap items-center gap-1.5">
                 {docTabs.map((tab) => {
@@ -330,15 +325,15 @@ export function EvidenceWorkstation({
                     <button
                       key={tab.id}
                       onClick={() => setSelectedDoc(tab.id)}
-                      className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-xl font-mono text-xs transition-all border ${
+                      className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors border ${
                         active
-                          ? 'bg-orange-500/20 text-orange-200 border-orange-400/60 shadow-[0_0_15px_rgba(6,182,212,0.25)]'
-                          : 'bg-slate-950/70 text-slate-400 border-slate-200 hover:text-slate-800'
+                          ? 'bg-blue-50 text-[#2563EB] border-blue-200 font-semibold'
+                          : 'bg-[#F8FAFC] text-[#64748B] border-[#E2E8F0] hover:text-[#1E293B] hover:bg-white'
                       }`}
                     >
-                      <FileText className="w-3.5 h-3.5 text-orange-400" />
+                      <FileText className="w-3.5 h-3.5" />
                       <span>{tab.label}</span>
-                      <span className="px-1.5 py-0.2 rounded bg-black/40 text-[10px] text-amber-300">
+                      <span className="px-1.5 py-0.2 rounded bg-black/5 text-[10px] text-[#64748B]">
                         {tab.tag}
                       </span>
                     </button>
@@ -346,20 +341,20 @@ export function EvidenceWorkstation({
                 })}
               </div>
 
-              {/* Zoom & Laser Trigger */}
+              {/* Zoom & Scanner Trigger */}
               <div className="flex items-center gap-2 self-end xl:self-auto">
-                <div className="flex items-center rounded-xl bg-slate-50 border border-slate-200 p-1 font-mono text-xs">
+                <div className="flex items-center rounded-lg bg-[#F8FAFC] border border-[#E2E8F0] p-0.5 text-xs">
                   <button
                     onClick={() => setZoomLevel((z) => Math.max(85, z - 10))}
-                    className="p-1.5 text-slate-400 hover:text-slate-800"
+                    className="p-1.5 text-[#64748B] hover:text-[#1E293B]"
                     title="Zoom Out"
                   >
                     <ZoomOut className="w-3.5 h-3.5" />
                   </button>
-                  <span className="px-2 text-orange-300">{zoomLevel}%</span>
+                  <span className="px-2 font-mono font-medium text-[#1E293B]">{zoomLevel}%</span>
                   <button
                     onClick={() => setZoomLevel((z) => Math.min(125, z + 10))}
-                    className="p-1.5 text-slate-400 hover:text-slate-800"
+                    className="p-1.5 text-[#64748B] hover:text-[#1E293B]"
                     title="Zoom In"
                   >
                     <ZoomIn className="w-3.5 h-3.5" />
@@ -368,168 +363,157 @@ export function EvidenceWorkstation({
 
                 <button
                   onClick={triggerLaserScan}
-                  className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-orange-500/15 hover:bg-orange-500/25 border border-orange-400/40 text-orange-200 font-mono text-xs transition-all"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 border border-blue-200 text-[#2563EB] text-xs font-medium transition-colors"
                 >
-                  <ScanLine className="w-3.5 h-3.5 text-orange-400" />
-                  <span>Trigger Laser OCR Scan</span>
+                  <ScanLine className="w-3.5 h-3.5" />
+                  <span>Scan</span>
                 </button>
               </div>
             </div>
 
             {/* 3-Way Forensic Mode Switcher */}
-            <div className="flex flex-wrap items-center justify-between gap-3 py-3 border-b border-slate-200">
+            <div className="flex flex-wrap items-center justify-between gap-3 py-3 border-b border-[#E2E8F0]">
               <div
                 role="tablist"
                 aria-label="Document Inspection Lens"
-                className="flex flex-wrap items-center gap-1.5 p-1 rounded-xl bg-slate-50 border border-slate-200"
+                className="flex flex-wrap items-center gap-1 p-1 rounded-lg bg-[#F1F5F9] border border-[#E2E8F0]"
               >
                 <button
                   role="tab"
                   aria-selected={canvasMode === 'standard'}
                   onClick={() => setCanvasMode('standard')}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono transition-all ${
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
                     canvasMode === 'standard'
-                      ? 'bg-orange-400 text-slate-950 font-bold shadow-[0_0_15px_rgba(6,182,212,0.4)]'
-                      : 'text-slate-300 hover:text-slate-800'
+                      ? 'bg-white text-[#2563EB] font-semibold shadow-2xs'
+                      : 'text-[#64748B] hover:text-[#1E293B]'
                   }`}
                 >
                   <FileText className="w-3.5 h-3.5" />
-                  <span>Standard PDF View</span>
+                  <span>Standard View</span>
                 </button>
 
                 <button
                   role="tab"
                   aria-selected={canvasMode === 'ela-xray'}
                   onClick={() => setCanvasMode('ela-xray')}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono transition-all ${
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
                     canvasMode === 'ela-xray'
-                      ? 'bg-rose-500 text-slate-800 font-bold shadow-[0_0_20px_rgba(244,63,94,0.6)]'
-                      : 'text-slate-300 hover:text-rose-200'
+                      ? 'bg-[#FEE2E2] text-[#991B1B] font-semibold shadow-2xs border border-[#FECACA]'
+                      : 'text-[#64748B] hover:text-[#991B1B]'
                   }`}
                 >
-                  <Flame className="w-3.5 h-3.5" />
-                  <span>Forensic ELA Heatmap X-Ray</span>
+                  <Flame className="w-3.5 h-3.5 text-[#DC2626]" />
+                  <span>Forensic ELA Heatmap</span>
                 </button>
 
                 <button
                   role="tab"
                   aria-selected={canvasMode === 'x509-seal'}
                   onClick={() => setCanvasMode('x509-seal')}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono transition-all ${
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
                     canvasMode === 'x509-seal'
-                      ? 'bg-amber-400 text-slate-950 font-bold shadow-[0_0_15px_rgba(245,158,11,0.4)]'
-                      : 'text-slate-300 hover:text-amber-200'
+                      ? 'bg-[#FEF3C7] text-[#92400E] font-semibold shadow-2xs border border-[#FDE68A]'
+                      : 'text-[#64748B] hover:text-[#92400E]'
                   }`}
                 >
-                  <KeyRound className="w-3.5 h-3.5" />
-                  <span>X.509 Cryptographic Seal Inspector</span>
+                  <KeyRound className="w-3.5 h-3.5 text-[#D97706]" />
+                  <span>Digital Signature Inspector</span>
                 </button>
               </div>
 
-              {/* ELA Sensitivity Controls when ELA X-Ray is active */}
+              {/* ELA Sensitivity Controls when ELA mode is active */}
               {canvasMode === 'ela-xray' && (
-                <div className="flex flex-wrap items-center gap-4 px-3 py-1.5 rounded-xl bg-rose-950/40 border border-rose-500/40 text-xs font-mono">
+                <div className="flex flex-wrap items-center gap-4 px-3 py-1.5 rounded-lg bg-rose-50 border border-rose-200 text-xs">
                   <div className="flex items-center gap-2">
-                    <SlidersHorizontal className="w-3.5 h-3.5 text-rose-400" />
-                    <span className="text-rose-200">
-                      ELA Sensitivity Amplifier:
-                    </span>
+                    <SlidersHorizontal className="w-3.5 h-3.5 text-[#DC2626]" />
+                    <span className="text-[#991B1B] font-medium">Sensitivity:</span>
                     <input
                       type="range"
                       min={20}
                       max={100}
                       value={elaSensitivity}
-                      onChange={(e) =>
-                        setElaSensitivity(Number(e.target.value))
-                      }
+                      onChange={(e) => setElaSensitivity(Number(e.target.value))}
                       aria-label="ELA Sensitivity Amplifier"
-                      className="w-24 accent-rose-500 cursor-pointer"
+                      className="w-20 accent-[#DC2626] cursor-pointer"
                     />
-                    <span className="text-rose-300 font-bold">
+                    <span className="text-[#991B1B] font-mono font-bold">
                       {elaSensitivity}%
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-slate-300">X-Ray Split:</span>
+                    <span className="text-[#64748B]">Split:</span>
                     <input
                       type="range"
                       min={10}
                       max={95}
                       value={elaSplitPosition}
-                      onChange={(e) =>
-                        setElaSplitPosition(Number(e.target.value))
-                      }
-                      aria-label="Before After ELA Split Slider"
-                      className="w-20 accent-orange-400 cursor-pointer"
+                      onChange={(e) => setElaSplitPosition(Number(e.target.value))}
+                      aria-label="ELA Split Slider"
+                      className="w-16 accent-[#2563EB] cursor-pointer"
                     />
                   </div>
                 </div>
               )}
             </div>
 
-            {/* Interactive Floating Tooltip Banner for Currently Focused Anomaly */}
+            {/* Contextual Discrepancy Detail Card for Currently Selected Finding */}
             {activeFlag && (
-              <motion.div
-                key={activeFlag.id}
-                initial={{ opacity: 0, y: -6 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="my-3 rounded-2xl p-3.5 bg-slate-50 border border-orange-400/40 shadow-[0_0_24px_rgba(6,182,212,0.2)] flex flex-col sm:flex-row sm:items-center justify-between gap-3"
-              >
+              <div className="my-3 rounded-lg p-3.5 bg-[#F8FAFC] border border-[#E2E8F0] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div className="flex items-start gap-2.5">
-                  <div className="p-2 rounded-xl bg-orange-500/15 border border-orange-400/30 text-orange-300 shrink-0 mt-0.5">
+                  <div className="p-2 rounded-lg bg-white border border-[#E2E8F0] shrink-0 mt-0.5">
                     {activeFlag.severity === 'CRITICAL' ? (
-                      <AlertOctagon className="w-4 h-4 text-rose-400" />
+                      <AlertOctagon className="w-4 h-4 text-[#DC2626]" />
                     ) : activeFlag.severity === 'WARNING' ? (
-                      <AlertTriangle className="w-4 h-4 text-amber-400" />
+                      <AlertTriangle className="w-4 h-4 text-[#D97706]" />
                     ) : (
-                      <Info className="w-4 h-4 text-purple-400" />
+                      <Info className="w-4 h-4 text-[#2563EB]" />
                     )}
                   </div>
                   <div>
-                    <div className="flex items-center gap-2 text-xs font-mono">
-                      <span className="text-orange-300 font-bold">
-                        FOCUSED BOUNDING BOX: {activeFlag.code}
+                    <div className="flex items-center gap-2 text-xs">
+                      <span className="font-semibold text-[#1E293B]">
+                        Selected Discrepancy: {activeFlag.code}
                       </span>
-                      <span className="text-slate-500">|</span>
-                      <span className="text-amber-300">{activeFlag.clauseRef}</span>
+                      <span className="text-[#CBD5E1]">|</span>
+                      <span className="text-[#64748B] font-mono">{activeFlag.clauseRef}</span>
                     </div>
-                    <p className="text-xs text-slate-200 mt-0.5">
+                    <p className="text-xs text-[#64748B] mt-0.5">
                       {activeFlag.forensicDetail}
                     </p>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2 shrink-0 font-mono text-[11px]">
-                  <div className="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-200">
-                    <div className="text-[9px] text-slate-400">PORTAL</div>
-                    <div className="text-emerald-300 font-bold">
+                <div className="flex items-center gap-2 shrink-0 font-mono text-xs">
+                  <div className="px-2.5 py-1 rounded bg-[#DCFCE7] border border-[#BBF7D0]">
+                    <div className="text-[10px] text-[#166534] font-medium font-sans">Portal Form</div>
+                    <div className="text-[#166534] font-bold">
                       {activeFlag.sourceComparison.portalValue}
                     </div>
                   </div>
-                  <div className="px-2.5 py-1 rounded-lg bg-rose-950/50 border border-rose-500/40">
-                    <div className="text-[9px] text-rose-300">EXTRACTED</div>
-                    <div className="text-rose-200 font-bold">
+                  <div className="px-2.5 py-1 rounded bg-[#FEE2E2] border border-[#FECACA]">
+                    <div className="text-[10px] text-[#991B1B] font-medium font-sans">Document Extracted</div>
+                    <div className="text-[#991B1B] font-bold">
                       {activeFlag.sourceComparison.docValue}
                     </div>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             )}
 
             {/* DOCUMENT CANVAS VIEWPORT */}
-            <div className="relative mt-3 rounded-2xl overflow-hidden border border-white/15 bg-slate-50 p-3 sm:p-6 min-h-[600px] flex items-center justify-center">
-              {/* Animated Vertical Laser Scan Beam when triggered */}
+            <div className="relative mt-3 rounded-xl overflow-hidden border border-[#E2E8F0] bg-[#F8FAFC] p-3 sm:p-6 min-h-[560px] flex items-center justify-center">
+              {/* Scan Beam indicator when triggered */}
               <AnimatePresence>
                 {isLaserScanning && (
                   <motion.div
                     initial={{ top: '0%' }}
                     animate={{ top: ['0%', '96%', '0%'] }}
                     exit={{ opacity: 0 }}
-                    transition={{ duration: 3.2, ease: 'easeInOut' }}
-                    className="pointer-events-none absolute left-0 right-0 z-30 h-1.5 bg-gradient-to-r from-orange-400 via-emerald-300 to-orange-400 shadow-[0_0_32px_8px_rgba(6,182,212,0.85)]"
+                    transition={{ duration: 2.8, ease: 'easeInOut' }}
+                    className="pointer-events-none absolute left-0 right-0 z-30 h-1 bg-[#2563EB] shadow-md"
                   >
-                    <div className="absolute -top-6 right-4 px-2.5 py-0.5 rounded bg-slate-50 border border-orange-400 text-[10px] font-mono text-orange-300">
-                      VISION-LLM &amp; ELA PIXEL QUANTIZATION SCANNING...
+                    <div className="absolute -top-6 right-4 px-2 py-0.5 rounded bg-white border border-[#E2E8F0] text-[10px] font-medium text-[#2563EB] shadow-xs">
+                      OCR Document Scan Active...
                     </div>
                   </motion.div>
                 )}
@@ -541,120 +525,66 @@ export function EvidenceWorkstation({
                   transform: `scale(${zoomLevel / 100})`,
                   transformOrigin: 'top center',
                 }}
-                className={`relative w-full max-w-[760px] rounded-xl transition-all duration-300 p-5 sm:p-7 border ${
+                className={`relative w-full max-w-[740px] rounded-lg transition-all duration-300 p-5 sm:p-7 border bg-white text-[#1E293B] shadow-sm ${
                   canvasMode === 'ela-xray'
-                    ? 'bg-[#05060a] text-slate-200 border-rose-500/50 shadow-[0_0_50px_rgba(244,63,94,0.25)]'
-                    : 'bg-[#f8fafc] text-slate-900 border-slate-300 shadow-2xl'
+                    ? 'border-[#DC2626]/50 ring-1 ring-rose-200'
+                    : 'border-[#CBD5E1]'
                 }`}
               >
-                {/* Forensic ELA Split Comparison Overlay when in ELA X-Ray mode */}
+                {/* Forensic ELA Split Comparison Overlay when in ELA mode */}
                 {canvasMode === 'ela-xray' && (
                   <div
                     style={{ width: `${elaSplitPosition}%` }}
-                    className="pointer-events-none absolute inset-y-0 left-0 z-10 border-r-2 border-orange-400 bg-[radial-gradient(circle_at_75%_62%,rgba(244,63,94,0.38),rgba(15,23,42,0.92)_65%)] mix-blend-screen"
+                    className="pointer-events-none absolute inset-y-0 left-0 z-10 border-r-2 border-[#DC2626] bg-rose-500/10"
                   >
-                    <div className="absolute top-3 left-3 px-2 py-0.5 rounded bg-rose-950/90 border border-rose-500/60 font-mono text-[10px] text-rose-300">
-                      8x8 DCT QUANTIZATION NOISE MAP (AMP: {elaSensitivity}%)
+                    <div className="absolute top-3 left-3 px-2 py-0.5 rounded bg-[#991B1B] text-white font-mono text-[10px]">
+                      DCT Quantization Heatmap (Sensitivity: {elaSensitivity}%)
                     </div>
                   </div>
                 )}
 
                 {/* Official Certificate Header */}
-                <div
-                  className={`border-b-2 pb-4 mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
-                    canvasMode === 'ela-xray'
-                      ? 'border-slate-800'
-                      : 'border-slate-800'
-                  }`}
-                >
+                <div className="border-b border-[#E2E8F0] pb-4 mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div className="flex items-center gap-3">
-                    <div
-                      className={`w-12 h-12 rounded-full flex items-center justify-center font-mono font-bold text-xs border-2 shrink-0 ${
-                        canvasMode === 'ela-xray'
-                          ? 'bg-slate-900 border-orange-500/40 text-orange-300'
-                          : 'bg-amber-50 border-amber-700 text-amber-900'
-                      }`}
-                    >
+                    <div className="w-11 h-11 rounded-lg flex items-center justify-center font-mono font-bold text-xs border shrink-0 bg-blue-50 border-blue-200 text-[#2563EB]">
                       GOV-UP
                     </div>
                     <div>
-                      <div
-                        className={`text-[10px] font-mono uppercase tracking-widest font-bold ${
-                          canvasMode === 'ela-xray'
-                            ? 'text-orange-400'
-                            : 'text-slate-600'
-                        }`}
-                      >
+                      <div className="text-[10px] font-mono uppercase tracking-wider font-semibold text-[#64748B]">
                         GOVERNMENT OF UTTAR PRADESH • DEPARTMENT OF HOME
                       </div>
-                      <h4
-                        className={`text-sm sm:text-base font-extrabold tracking-tight ${
-                          canvasMode === 'ela-xray'
-                            ? 'text-slate-800'
-                            : 'text-slate-900'
-                        }`}
-                      >
-                        UTTAR PRADESH FIRE &amp; EMERGENCY SERVICES — NOC CERTIFICATE
+                      <h4 className="text-sm sm:text-base font-bold tracking-tight text-[#1E293B]">
+                        FIRE &amp; EMERGENCY SERVICES — NO OBJECTION CERTIFICATE
                       </h4>
-                      <p
-                        className={`text-[11px] font-mono ${
-                          canvasMode === 'ela-xray'
-                            ? 'text-slate-400'
-                            : 'text-slate-600'
-                        }`}
-                      >
+                      <p className="text-xs text-[#64748B]">
                         {application.certificateData.issuingAuthority}
                       </p>
                     </div>
                   </div>
 
-                  <div className="text-left sm:text-right font-mono text-[11px]">
-                    <div
-                      className={`font-bold ${
-                        canvasMode === 'ela-xray'
-                          ? 'text-orange-300'
-                          : 'text-slate-900'
-                      }`}
-                    >
+                  <div className="text-left sm:text-right font-mono text-xs">
+                    <div className="font-semibold text-[#1E293B]">
                       NOC No: {application.certificateData.certNumber}
                     </div>
-                    <div
-                      className={
-                        canvasMode === 'ela-xray'
-                          ? 'text-slate-400'
-                          : 'text-slate-600'
-                      }
-                    >
+                    <div className="text-[#64748B]">
                       Issued: {application.certificateData.issueDate}
                     </div>
                   </div>
                 </div>
 
-                {/* Certificate Institution Intro */}
-                <div
-                  className={`text-xs leading-relaxed mb-4 ${
-                    canvasMode === 'ela-xray'
-                      ? 'text-slate-300'
-                      : 'text-slate-700'
-                  }`}
-                >
+                {/* Certificate Text */}
+                <div className="text-xs leading-relaxed mb-4 text-[#475569]">
                   This is to certify that the institutional academic premises of{' '}
-                  <strong
-                    className={
-                      canvasMode === 'ela-xray'
-                        ? 'text-slate-800'
-                        : 'text-slate-950'
-                    }
-                  >
+                  <strong className="text-[#1E293B]">
                     {application.name} (AICTE PID: {application.pid})
                   </strong>{' '}
-                  have been inspected in accordance with National Building Code (NBC) Part-4 Fire &amp; Life Safety norms and APH 2024–27 statutory guidelines.
+                  have been inspected in accordance with National Building Code (NBC) Part-4 norms and APH 2024–27 guidelines.
                 </div>
 
-                {/* INTERACTIVE BOUNDING BOXES GRID OVER CERTIFICATE FIELDS */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 my-4 relative z-20">
-                  {/* BOUNDING BOX 1: SURVEY NO: 149/B (FLAG 1) */}
-                  <motion.div
+                {/* BOUNDING BOXES GRID OVER CERTIFICATE FIELDS */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 my-4 relative z-20">
+                  {/* BOUNDING BOX 1: SURVEY NO */}
+                  <div
                     onClick={() => {
                       setActiveBoxId('box-survey')
                       const f1 = application.findings.find(
@@ -662,57 +592,30 @@ export function EvidenceWorkstation({
                       )
                       if (f1) setActiveFlagId(f1.id)
                     }}
-                    animate={
-                      activeFlagId === 'flag-1' || activeBoxId === 'box-survey'
-                        ? {
-                            scale: [1, 1.02, 1],
-                            boxShadow: [
-                              '0 0 0px rgba(244,63,94,0)',
-                              '0 0 28px rgba(244,63,94,0.65)',
-                              '0 0 12px rgba(244,63,94,0.35)',
-                            ],
-                          }
-                        : {}
-                    }
-                    transition={{ duration: 1.6, repeat: Infinity }}
-                    className={`relative rounded-xl p-3.5 border-2 cursor-pointer transition-all ${
+                    className={`rounded-lg p-3 border-2 cursor-pointer transition-all ${
                       activeFlagId === 'flag-1'
-                        ? 'border-rose-500 bg-rose-500/15 ring-2 ring-rose-400'
-                        : canvasMode === 'ela-xray'
-                          ? 'border-rose-500/60 bg-slate-900/90'
-                          : 'border-rose-500/80 bg-rose-50/90'
+                        ? 'border-[#DC2626] bg-[#FEF2F2] ring-2 ring-[#DC2626]/30'
+                        : 'border-[#FCA5A5] bg-[#FEF2F2]/60 hover:border-[#DC2626]'
                     }`}
                   >
                     <div className="flex items-center justify-between gap-2 mb-1">
-                      <span className="text-[10px] font-mono uppercase tracking-wider font-bold text-rose-500">
-                        1. Plot / Survey / Khasra No.
+                      <span className="text-[10px] font-semibold text-[#991B1B]">
+                        1. Plot / Survey Number
                       </span>
-                      <span className="px-1.5 py-0.5 rounded bg-rose-600 text-slate-800 font-mono text-[9px] font-bold">
-                        FLAG-01 MISMATCH
+                      <span className="px-1.5 py-0.5 rounded bg-[#DC2626] text-white font-mono text-[9px] font-bold">
+                        DISCREPANCY
                       </span>
                     </div>
-                    <div
-                      className={`font-mono text-sm font-extrabold ${
-                        canvasMode === 'ela-xray'
-                          ? 'text-rose-200'
-                          : 'text-rose-950'
-                      }`}
-                    >
+                    <div className="font-mono text-sm font-bold text-[#991B1B]">
                       Survey No: 149/B
                     </div>
-                    <div
-                      className={`text-[11px] font-mono mt-1 ${
-                        canvasMode === 'ela-xray'
-                          ? 'text-slate-300'
-                          : 'text-rose-800'
-                      }`}
-                    >
-                      Portal &amp; Land Deed: <strong>Survey No. 142/B</strong>
+                    <div className="text-[11px] mt-1 text-[#64748B]">
+                      Portal Form: <strong>Survey No. 142/B</strong>
                     </div>
-                  </motion.div>
+                  </div>
 
-                  {/* BOUNDING BOX 2: BUILT-UP AREA: 14,200 sq.m (FLAG 3) */}
-                  <motion.div
+                  {/* BOUNDING BOX 2: BUILT-UP AREA */}
+                  <div
                     onClick={() => {
                       setActiveBoxId('box-area')
                       const f3 = application.findings.find(
@@ -720,61 +623,30 @@ export function EvidenceWorkstation({
                       )
                       if (f3) setActiveFlagId(f3.id)
                     }}
-                    animate={
-                      activeFlagId === 'flag-3' || activeBoxId === 'box-area'
-                        ? {
-                            scale: [1, 1.02, 1],
-                            boxShadow: [
-                              '0 0 0px rgba(245,158,11,0)',
-                              '0 0 26px rgba(245,158,11,0.55)',
-                              '0 0 10px rgba(245,158,11,0.25)',
-                            ],
-                          }
-                        : {}
-                    }
-                    transition={{ duration: 1.8, repeat: Infinity }}
-                    className={`relative rounded-xl p-3.5 border-2 cursor-pointer transition-all ${
+                    className={`rounded-lg p-3 border-2 cursor-pointer transition-all ${
                       activeFlagId === 'flag-3'
-                        ? 'border-amber-400 bg-amber-500/15 ring-2 ring-amber-400'
-                        : canvasMode === 'ela-xray'
-                          ? 'border-amber-500/50 bg-slate-900/90'
-                          : 'border-amber-500/80 bg-amber-50/90'
+                        ? 'border-[#D97706] bg-[#FFFBEB] ring-2 ring-[#D97706]/30'
+                        : 'border-[#FDE68A] bg-[#FFFBEB]/60 hover:border-[#D97706]'
                     }`}
                   >
                     <div className="flex items-center justify-between gap-2 mb-1">
-                      <span className="text-[10px] font-mono uppercase tracking-wider font-bold text-amber-600">
-                        2. Built-Up Carpet Area &amp; Labs
+                      <span className="text-[10px] font-semibold text-[#92400E]">
+                        2. Built-Up Area &amp; Computer Labs
                       </span>
-                      <span className="px-1.5 py-0.5 rounded bg-amber-500 text-slate-950 font-mono text-[9px] font-bold">
-                        FLAG-03 LAB DEFICIT
+                      <span className="px-1.5 py-0.5 rounded bg-[#D97706] text-white font-mono text-[9px] font-bold">
+                        REVIEW
                       </span>
                     </div>
-                    <div
-                      className={`font-mono text-sm font-extrabold ${
-                        canvasMode === 'ela-xray'
-                          ? 'text-amber-200'
-                          : 'text-slate-950'
-                      }`}
-                    >
+                    <div className="font-mono text-sm font-bold text-[#1E293B]">
                       Built-up Area: 14,200 sq.m
                     </div>
-                    <div
-                      className={`text-[11px] font-mono mt-1 ${
-                        canvasMode === 'ela-xray'
-                          ? 'text-slate-300'
-                          : 'text-amber-900'
-                      }`}
-                    >
-                      YOLOv8 Lab Count:{' '}
-                      <strong>
-                        {application.certificateData.labTerminalsDetected}/
-                        {application.certificateData.labTerminalsRequired} PCs
-                      </strong>
+                    <div className="text-[11px] mt-1 text-[#64748B]">
+                      Lab Terminals: <strong>{application.certificateData.labTerminalsDetected}/{application.certificateData.labTerminalsRequired} Required</strong>
                     </div>
-                  </motion.div>
+                  </div>
 
-                  {/* BOUNDING BOX 3: VALID UNTIL: 31-08-2027 (FLAG 2 - ELA FORGERY) */}
-                  <motion.div
+                  {/* BOUNDING BOX 3: VALID UNTIL (FLAG 2 - ELA TAMPER) */}
+                  <div
                     onClick={() => {
                       setActiveBoxId('box-expiry')
                       const f2 = application.findings.find(
@@ -782,70 +654,35 @@ export function EvidenceWorkstation({
                       )
                       if (f2) setActiveFlagId(f2.id)
                     }}
-                    animate={
-                      activeFlagId === 'flag-2' ||
-                      activeBoxId === 'box-expiry' ||
-                      canvasMode === 'ela-xray'
-                        ? {
-                            scale: [1, 1.025, 1],
-                            boxShadow: [
-                              '0 0 12px rgba(244,63,94,0.45)',
-                              '0 0 36px rgba(244,63,94,0.9)',
-                              '0 0 12px rgba(244,63,94,0.45)',
-                            ],
-                          }
-                        : {}
-                    }
-                    transition={{ duration: 1.4, repeat: Infinity }}
-                    className={`relative rounded-xl p-3.5 border-2 cursor-pointer transition-all ${
-                      canvasMode === 'ela-xray'
-                        ? 'border-rose-500 bg-gradient-to-r from-rose-600/40 via-amber-500/40 to-rose-600/40 text-slate-800 ring-2 ring-yellow-300'
-                        : activeFlagId === 'flag-2'
-                          ? 'border-rose-600 bg-rose-100 ring-2 ring-rose-500'
-                          : 'border-rose-500/80 bg-rose-50/90'
+                    className={`rounded-lg p-3 border-2 cursor-pointer transition-all ${
+                      activeFlagId === 'flag-2' || canvasMode === 'ela-xray'
+                        ? 'border-[#DC2626] bg-[#FEF2F2] ring-2 ring-[#DC2626]'
+                        : 'border-[#FCA5A5] bg-[#FEF2F2]/60 hover:border-[#DC2626]'
                     }`}
                   >
                     <div className="flex items-center justify-between gap-2 mb-1">
-                      <span
-                        className={`text-[10px] font-mono uppercase tracking-wider font-bold ${
-                          canvasMode === 'ela-xray'
-                            ? 'text-yellow-300'
-                            : 'text-rose-600'
-                        }`}
-                      >
-                        3. NOC Statutory Expiry Date
+                      <span className="text-[10px] font-semibold text-[#991B1B]">
+                        3. Statutory Validity Date
                       </span>
-                      <span className="px-1.5 py-0.5 rounded bg-rose-600 text-slate-800 font-mono text-[9px] font-bold">
-                        ELA VARIANCE: 0.86
+                      <span className="px-1.5 py-0.5 rounded bg-[#DC2626] text-white font-mono text-[9px] font-bold">
+                        ELA: 0.86
                       </span>
                     </div>
-                    <div
-                      className={`font-mono text-sm font-extrabold flex items-center gap-2 ${
-                        canvasMode === 'ela-xray'
-                          ? 'text-yellow-200 drop-shadow-[0_0_10px_rgba(253,224,71,0.95)]'
-                          : 'text-rose-950'
-                      }`}
-                    >
+                    <div className="font-mono text-sm font-bold flex items-center gap-2 text-[#991B1B]">
                       <span>Valid Until: 31-08-2027</span>
                       {canvasMode === 'ela-xray' && (
-                        <span className="px-1.5 py-0.5 text-[10px] rounded bg-yellow-400 text-slate-950 font-black">
-                          SPLICE ARTIFACT
+                        <span className="px-1.5 py-0.5 text-[9px] rounded bg-[#DC2626] text-white font-bold">
+                          SPLICE
                         </span>
                       )}
                     </div>
-                    <div
-                      className={`text-[11px] font-mono mt-1 ${
-                        canvasMode === 'ela-xray'
-                          ? 'text-rose-200'
-                          : 'text-rose-800'
-                      }`}
-                    >
-                      PDF Producer: <strong>Canva / iLovePDF XRef</strong>
+                    <div className="text-[11px] mt-1 text-[#64748B]">
+                      Producer: <strong>Canva / iLovePDF XRef</strong>
                     </div>
-                  </motion.div>
+                  </div>
 
-                  {/* BOUNDING BOX 4: DIGITAL SIGNATURE BLOCK (FLAG 4 / X.509) */}
-                  <motion.div
+                  {/* BOUNDING BOX 4: DIGITAL SIGNATURE */}
+                  <div
                     onClick={() => {
                       setActiveBoxId('box-dsc')
                       const f4 = application.findings.find(
@@ -853,124 +690,88 @@ export function EvidenceWorkstation({
                       )
                       if (f4) setActiveFlagId(f4.id)
                     }}
-                    className={`relative rounded-xl p-3.5 border-2 cursor-pointer transition-all ${
+                    className={`rounded-lg p-3 border-2 cursor-pointer transition-all ${
                       activeFlagId === 'flag-4' || canvasMode === 'x509-seal'
-                        ? 'border-orange-400 bg-orange-500/15 ring-2 ring-orange-400'
-                        : canvasMode === 'ela-xray'
-                          ? 'border-orange-500/40 bg-slate-900/90'
-                          : 'border-emerald-600/70 bg-emerald-50/80'
+                        ? 'border-[#2563EB] bg-blue-50 ring-2 ring-[#2563EB]/30'
+                        : 'border-[#BBF7D0] bg-[#F0FDF4] hover:border-[#16A34A]'
                     }`}
                   >
                     <div className="flex items-center justify-between gap-2 mb-1">
-                      <span
-                        className={`text-[10px] font-mono uppercase tracking-wider font-bold ${
-                          canvasMode === 'ela-xray'
-                            ? 'text-orange-300'
-                            : 'text-emerald-800'
-                        }`}
-                      >
-                        4. Digital Signature Block (DSC)
+                      <span className="text-[10px] font-semibold text-[#166534]">
+                        4. Digital Signature Certificate (DSC)
                       </span>
-                      <span className="px-1.5 py-0.5 rounded bg-emerald-600 text-slate-800 font-mono text-[9px] font-bold">
+                      <span className="px-1.5 py-0.5 rounded bg-[#16A34A] text-white font-mono text-[9px] font-bold">
                         X.509 SEAL
                       </span>
                     </div>
-                    <div
-                      className={`font-mono text-xs font-bold truncate ${
-                        canvasMode === 'ela-xray'
-                          ? 'text-slate-800'
-                          : 'text-slate-900'
-                      }`}
-                    >
+                    <div className="font-mono text-xs font-bold truncate text-[#1E293B]">
                       {application.certificateData.dscSigner}
                     </div>
-                    <div
-                      className={`text-[10px] font-mono mt-1 ${
-                        canvasMode === 'ela-xray'
-                          ? 'text-orange-300'
-                          : 'text-slate-600'
-                      }`}
-                    >
+                    <div className="text-[10px] font-mono mt-1 text-[#64748B]">
                       Serial: {application.certificateData.dscSerial}
                     </div>
-                  </motion.div>
+                  </div>
                 </div>
 
-                {/* X.509 Cryptographic Seal Inspector Drawer when in x509-seal mode */}
+                {/* X.509 Cryptographic Seal Inspector Details */}
                 {canvasMode === 'x509-seal' && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    className="my-4 rounded-xl p-4 bg-slate-950 text-slate-100 border border-amber-400/50 font-mono text-xs space-y-2"
-                  >
-                    <div className="flex items-center justify-between text-amber-300 font-bold">
+                  <div className="my-4 rounded-lg p-4 bg-[#F8FAFC] border border-[#E2E8F0] text-xs space-y-2">
+                    <div className="flex items-center justify-between text-[#1E293B] font-bold">
                       <span className="flex items-center gap-1.5">
-                        <Lock className="w-4 h-4" />
-                        PKCS#7 / SHA-256 CRYPTOGRAPHIC SIGNATURE AUDIT
+                        <Lock className="w-4 h-4 text-[#2563EB]" />
+                        PKCS#7 / SHA-256 Signature Verification
                       </span>
-                      <span className="px-2 py-0.5 rounded bg-rose-500/20 border border-rose-500/50 text-rose-300 text-[10px]">
-                        BYTE-RANGE MODIFIED POST-SIGN
+                      <span className="px-2 py-0.5 rounded bg-[#FEE2E2] text-[#991B1B] text-[10px] font-semibold border border-[#FECACA]">
+                        Incremental Save Detected
                       </span>
                     </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] text-slate-300 pt-1">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] text-[#475569] pt-1">
                       <div>
-                        <span className="text-slate-500">Issuer CA:</span>{' '}
-                        {'CCA India -> NIC Sub-CA for Gov 2024'}
+                        <span className="text-[#64748B]">Issuer CA:</span> CCA India -&gt; NIC Sub-CA
                       </div>
                       <div>
-                        <span className="text-slate-500">Digest Algorithm:</span> SHA256withRSA (2048-bit)
+                        <span className="text-[#64748B]">Digest Algorithm:</span> SHA256withRSA (2048-bit)
                       </div>
                       <div>
-                        <span className="text-slate-500">PDF XRef Revisions:</span>{' '}
-                        <span className="text-rose-400 font-bold">
-                          3 Incremental Saves Detected
-                        </span>
+                        <span className="text-[#64748B]">PDF Revisions:</span>{' '}
+                        <strong className="text-[#991B1B]">3 Incremental Saves Detected</strong>
                       </div>
                       <div>
-                        <span className="text-slate-500">Tampered Object:</span>{' '}
-                        <span className="text-rose-400 font-bold">
-                          Obj 42 0 R (/Tx ValidUntil = 31-08-2027)
-                        </span>
+                        <span className="text-[#64748B]">Modified Field:</span>{' '}
+                        <strong className="text-[#991B1B]">Expiry Date (ValidUntil = 2027)</strong>
                       </div>
                     </div>
-                  </motion.div>
+                  </div>
                 )}
 
-                {/* Official Certificate Footer with QR & Ink Stamp */}
+                {/* Certificate Footer */}
                 <div
                   className={`mt-5 pt-4 border-t flex flex-wrap items-center justify-between gap-4 text-xs ${
                     canvasMode === 'ela-xray'
                       ? 'border-slate-800 text-slate-400'
-                      : 'border-slate-300 text-slate-600'
+                      : 'border-[#E2E8F0] text-[#64748B]'
                   }`}
                 >
                   <div className="flex items-center gap-3">
                     <div
-                      className={`p-2 rounded-lg border ${
+                      className={`p-1.5 rounded-md border ${
                         canvasMode === 'ela-xray'
-                          ? 'bg-slate-900 border-orange-500/40 text-orange-400'
-                          : 'bg-white border-slate-300 text-slate-900'
+                          ? 'bg-slate-900 border-slate-700 text-white'
+                          : 'bg-white border-[#E2E8F0] text-[#1E293B]'
                       }`}
                     >
-                      <QrCode className="w-9 h-9" />
+                      <QrCode className="w-8 h-8" />
                     </div>
                     <div className="font-mono text-[10px]">
-                      <div className="font-bold">
-                        API SETU DIGILOCKER URI:
+                      <div className="font-semibold text-[#1E293B]">
+                        API SETU DIGILOCKER URI
                       </div>
                       <div>in.gov.up.fireservices-NOC-88412</div>
-                      <div>Baseline Background ELA: 0.11 (Normal)</div>
                     </div>
                   </div>
 
                   <div className="flex items-center gap-3">
-                    <div
-                      className={`px-3 py-1.5 rounded-full border-2 rotate-[-4deg] font-mono text-[10px] font-extrabold uppercase tracking-wider ${
-                        canvasMode === 'ela-xray'
-                          ? 'border-orange-400/60 text-orange-300 bg-orange-950/30'
-                          : 'border-indigo-700/70 text-indigo-900 bg-indigo-50'
-                      }`}
-                    >
+                    <div className="px-3 py-1.5 rounded-full border border-blue-200 bg-blue-50 text-[#2563EB] font-mono text-[10px] font-semibold">
                       DIRECTORATE SEAL • LUCKNOW ZONE
                     </div>
                   </div>
@@ -981,29 +782,41 @@ export function EvidenceWorkstation({
         </div>
       </div>
 
-      <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm" aria-label="Review safeguards and actions">
+      {/* STATUTORY SAFEGUARD & CONTEXTUAL ACTION SECTION (NORMAL DOCUMENT FLOW - NO FIXED OVERLAY) */}
+      <section className="rounded-xl border border-[#E2E8F0] bg-white p-5 shadow-xs" aria-label="Review Safeguards and Contextual Actions">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div className="flex items-start gap-3">
-            <div className="rounded-xl border border-amber-200 bg-amber-50 p-2 text-amber-700 shrink-0">
-              <Scale className="h-4 w-4" />
+            <div className="rounded-lg border border-blue-200 bg-blue-50 p-2 text-[#2563EB] shrink-0">
+              <Scale className="h-5 w-5" />
             </div>
             <div>
-              <h2 className="text-sm font-bold text-slate-800">Human review safeguard</h2>
-              <p className="mt-1 max-w-2xl text-xs leading-5 text-slate-600">
-                AI findings are preliminary decision-support indicators. Final regulatory decisions remain with authorised AICTE officers.
+              <h3 className="text-sm font-bold text-[#1E293B]">Human Review Safeguard (APH 2024–27 Clause 1.9)</h3>
+              <p className="mt-0.5 max-w-3xl text-xs leading-relaxed text-[#64748B]">
+                AI scrutiny results are preliminary decision-support indicators. Final regulatory decisions, approvals, or show-cause notices require deliberate digital signature sign-off by authorized AICTE officers.
               </p>
             </div>
           </div>
-          <div className="flex flex-wrap items-center gap-2">
-            <button onClick={() => onOpenSignOffModal('deficiency')} className="rounded-lg border border-rose-200 bg-rose-50 px-3 py-2 text-xs font-semibold text-rose-800 transition-colors hover:bg-rose-100">
-              Draft correction notice
+
+          {/* Contextual Action Buttons */}
+          <div className="flex flex-wrap items-center gap-2.5 self-start lg:self-center">
+            <button
+              onClick={() => onOpenSignOffModal('deficiency')}
+              className="px-3.5 py-2 rounded-lg border border-[#FECACA] bg-[#FEF2F2] hover:bg-[#FEE2E2] text-[#991B1B] text-xs font-semibold transition-colors"
+            >
+              Draft Correction Notice
             </button>
-            <button onClick={() => onOpenSignOffModal('evc')} className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs font-semibold text-amber-800 transition-colors hover:bg-amber-100">
-              Request physical verification
+            <button
+              onClick={() => onOpenSignOffModal('evc')}
+              className="px-3.5 py-2 rounded-lg border border-[#FDE68A] bg-[#FFFBEB] hover:bg-[#FEF3C7] text-[#92400E] text-xs font-semibold transition-colors"
+            >
+              Request Physical Verification
             </button>
-            <button onClick={() => onOpenSignOffModal('override')} className="flex items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-2 text-xs font-semibold text-slate-800 transition-colors hover:bg-blue-700">
+            <button
+              onClick={() => onOpenSignOffModal('override')}
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-xs font-semibold shadow-xs transition-colors"
+            >
               <ShieldCheck className="h-4 w-4" />
-              Mark as verified
+              <span>Mark as Verified</span>
             </button>
           </div>
         </div>

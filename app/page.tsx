@@ -17,6 +17,7 @@ import {
 } from '@/components/pramaan/forensic-audit-ledger'
 import { NodalUploadWizard } from '@/components/pramaan/nodal-upload-wizard'
 import { PolicyRuleBuilder } from '@/components/pramaan/policy-rule-builder'
+import { LoginView } from '@/components/pramaan/login-view'
 import {
   AphSearchModal,
   ImmutableSignOffModal,
@@ -75,8 +76,9 @@ const INITIAL_AUDIT_LOGS: AuditLogEntry[] = [
 export default function AictePramaanAiPage() {
   const [applications, setApplications] =
     useState<InstitutionApplication[]>(INITIAL_APPLICATIONS)
-  const [activeRole, setActiveRole] = useState<RoleView>('scrutiny-officer')
   const [hasEnteredPortal, setHasEnteredPortal] = useState(false)
+  const [activeRole, setActiveRole] = useState<RoleView>('scrutiny-officer')
+  const [userEmail, setUserEmail] = useState('scrutiny.officer@aicte.gov.in')
   const [activeSubTab, setActiveSubTab] =
     useState<ScrutinySubTab>('triage-deck')
   const [selectedAppId, setSelectedAppId] =
@@ -118,6 +120,16 @@ export default function AictePramaanAiPage() {
     }, 4500)
   }
 
+  const handleLogin = (role: RoleView, email: string) => {
+    setActiveRole(role)
+    setUserEmail(email)
+    setHasEnteredPortal(true)
+    if (role === 'nodal-officer') {
+      setSelectedAppId('app-apex-lucknow')
+    }
+    showToast(`Signed in successfully as ${email}`)
+  }
+
   const handleSelectApplicationFromTable = (app: InstitutionApplication) => {
     setSelectedAppId(app.id)
     setActiveRole('scrutiny-officer')
@@ -132,9 +144,9 @@ export default function AictePramaanAiPage() {
       setActiveRole('scrutiny-officer')
       setActiveSubTab('evidence-workstation')
       showToast(
-        'Live EoA Packet Ingested: Apex Institute of Engineering & Technology (PID: 1-492819201) — 2 Critical Forensic Flags Detected in 1m 38s.'
+        'Submission Ingested: Apex Institute of Engineering & Technology (PID: 1-492819201) — 2 Discrepancies Found in 1m 38s.'
       )
-    }, 900)
+    }, 800)
   }
 
   const handleConfirmSignOff = (entry: AuditLogEntry) => {
@@ -149,7 +161,7 @@ export default function AictePramaanAiPage() {
     setSignOffModalState({ isOpen: false, actionType: null })
     setActiveSubTab('forensic-audit-ledger')
     showToast(
-      `DSC Signed & Recorded: ${entry.pid} updated to "${entry.resultingState}" in Immutable Audit Ledger.`
+      `Recorded in Audit Trail: ${entry.pid} updated to "${entry.resultingState}".`
     )
   }
 
@@ -161,72 +173,44 @@ export default function AictePramaanAiPage() {
   }[] = [
     {
       id: 'triage-deck',
-      label: 'Sub-Tab 1A: 3D Parallax Risk Triage Command Deck',
-      badge: '8,420 EoA Apps',
+      label: '3D Risk Triage',
+      badge: '8,420 Applications',
       icon: <LayoutGrid className="w-4 h-4" />,
     },
     {
       id: 'evidence-workstation',
-      label: 'Sub-Tab 1B: Split-Screen Evidence & Bounding-Box Workstation',
-      badge: 'HERO • ELA X-RAY',
+      label: 'Evidence & Document Review',
+      badge: 'Active Case',
       icon: <SplitSquareVertical className="w-4 h-4" />,
     },
     {
       id: 'forensic-audit-ledger',
-      label: 'Sub-Tab 1C: Immutable DSC Forensic Audit Ledger',
-      badge: `${auditLogs.length} Signed Blocks`,
+      label: 'Digital Signature Audit',
+      badge: `${auditLogs.length} Verified Entries`,
       icon: <ScrollText className="w-4 h-4" />,
     },
   ]
 
-  return (
-    <div className="min-h-screen relative bg-[#f4f8fd] text-[#17335f] cyber-grid-bg">
-      {/* Animated Sovereign Cyber-Glass Aurora Mesh Background Orbs */}
-      <div className="pointer-events-none fixed inset-0 overflow-hidden z-0">
-        <motion.div
-          animate={{
-            x: [0, 40, -20, 0],
-            y: [0, -30, 20, 0],
-          }}
-          transition={{ duration: 22, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute -top-32 left-1/4 w-[520px] h-[520px] rounded-full bg-[#06B6D4]/12 blur-3xl"
-        />
-        <motion.div
-          animate={{
-            x: [0, -50, 30, 0],
-            y: [0, 40, -25, 0],
-          }}
-          transition={{ duration: 26, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute top-1/3 -right-32 w-[480px] h-[480px] rounded-full bg-[#F59E0B]/10 blur-3xl"
-        />
-        <motion.div
-          animate={{
-            x: [0, 30, -40, 0],
-            y: [0, -20, 35, 0],
-          }}
-          transition={{ duration: 28, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute -bottom-32 left-1/3 w-[540px] h-[540px] rounded-full bg-[#8B5CF6]/12 blur-3xl"
-        />
-        <motion.div
-          animate={{
-            x: [0, -25, 25, 0],
-            y: [0, 25, -25, 0],
-          }}
-          transition={{ duration: 24, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute bottom-1/4 left-12 w-[400px] h-[400px] rounded-full bg-[#10B981]/10 blur-3xl"
-        />
-      </div>
+  // If user hasn't authenticated into the workspace, render the official Login Page
+  if (!hasEnteredPortal) {
+    return <LoginView onLogin={handleLogin} />
+  }
 
-      {/* Workspace navigation appears after entering the portal. */}
-      {hasEnteredPortal && (
-        <TopGlassHeader
-          activeRole={activeRole}
-          onSelectRole={setActiveRole}
-          onOpenCmdK={() => setIsCmdKOpen(true)}
-          onSimulateLiveSubmission={handleSimulateLiveSubmission}
-          isSimulating={isSimulating}
-        />
-      )}
+  return (
+    <div className="min-h-screen bg-[#F8FAFC] text-[#1E293B]">
+      {/* Header Bar */}
+      <TopGlassHeader
+        activeRole={activeRole}
+        onSelectRole={setActiveRole}
+        onOpenCmdK={() => setIsCmdKOpen(true)}
+        onSimulateLiveSubmission={handleSimulateLiveSubmission}
+        isSimulating={isSimulating}
+        onSignOut={() => {
+          setHasEnteredPortal(false)
+          showToast('Signed out of workspace successfully.')
+        }}
+        userEmail={userEmail}
+      />
 
       {/* Toast Notification Banner */}
       <AnimatePresence>
@@ -235,69 +219,23 @@ export default function AictePramaanAiPage() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed top-28 right-6 z-50 max-w-md rounded-2xl bg-slate-900/95 backdrop-blur-2xl border border-orange-400/50 p-4 shadow-[0_0_35px_rgba(6,182,212,0.4)] flex items-start gap-3"
+            className="fixed top-24 right-6 z-50 max-w-md rounded-xl bg-white border border-[#E2E8F0] p-4 shadow-lg flex items-start gap-3"
           >
-            <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
-            <div className="text-xs font-mono text-slate-100 leading-relaxed">
+            <CheckCircle2 className="w-5 h-5 text-[#166534] shrink-0 mt-0.5" />
+            <div className="text-xs text-[#1E293B] leading-relaxed">
               {toastNotification}
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {!hasEnteredPortal && (
-        <section className="relative z-10 max-w-6xl mx-auto px-4 lg:px-8 py-12 lg:py-20">
-          <div className="grid lg:grid-cols-[1.15fr_0.85fr] gap-8 items-center">
-            <div className="space-y-6">
-              <span className="inline-flex rounded-full bg-amber-100 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-[#8a5a00] border border-amber-300">
-                Government approval workspace
-              </span>
-              <h1 className="text-4xl lg:text-6xl font-black tracking-tight text-[#0b2d63]">
-                Welcome to <span className="text-orange-500">PRAMAAN-AI</span>
-              </h1>
-              <p className="max-w-2xl text-lg leading-8 text-[#52647b]">
-                A friendly, transparent workspace for application scrutiny, evidence review, and policy administration.
-              </p>
-              <div className="flex flex-wrap gap-3">
-                <button
-                  type="button"
-                  onClick={() => setHasEnteredPortal(true)}
-                  className="rounded-full bg-amber-400 px-6 py-3 font-bold text-[#17335f] shadow-md hover:bg-amber-300"
-                >
-                  Enter portal
-                </button>
-                <button
-                  type="button"
-                  onClick={() => { setActiveRole('nodal-officer'); setHasEnteredPortal(true) }}
-                  className="rounded-full border-2 border-[#0b2d63] bg-white px-6 py-3 font-bold text-[#0b2d63] hover:bg-blue-50"
-                >
-                  Nodal officer login
-                </button>
-              </div>
-            </div>
-            <div className="rounded-3xl border border-amber-300 bg-white/95 p-6 shadow-xl">
-              <h2 className="text-xl font-extrabold text-[#0b2d63]">Demo login credentials</h2>
-              <p className="mt-2 text-sm text-[#52647b]">Use these mock credentials to explore each workspace.</p>
-              <dl className="mt-5 space-y-3 text-sm">
-                <div className="flex justify-between rounded-xl bg-blue-50 px-4 py-3"><dt className="font-semibold text-[#52647b]">User ID</dt><dd className="font-mono font-bold text-[#0b2d63]">demo@pramaan.ai</dd></div>
-                <div className="flex justify-between rounded-xl bg-amber-50 px-4 py-3"><dt className="font-semibold text-[#52647b]">Password</dt><dd className="font-mono font-bold text-[#0b2d63]">pramaan2026</dd></div>
-              </dl>
-              <div className="mt-6 grid gap-2">
-                <button type="button" onClick={() => { setActiveRole('scrutiny-officer'); setHasEnteredPortal(true) }} className="rounded-xl bg-amber-400 px-4 py-3 text-sm font-bold text-[#17335f] shadow-sm hover:bg-amber-300">Open scrutiny officer</button>
-                <button type="button" onClick={() => { setActiveRole('policy-admin'); setHasEnteredPortal(true) }} className="rounded-xl bg-orange-500 px-4 py-3 text-sm font-bold text-white hover:bg-orange-600">Open policy admin</button>
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
-
       {/* Main Content Container */}
-      <main className={`${hasEnteredPortal ? '' : 'hidden '}relative z-10 max-w-[1600px] mx-auto px-4 lg:px-8 py-6`}>
+      <main className="max-w-[1600px] mx-auto px-4 lg:px-8 py-6">
         {/* VIEW 1: SCRUTINY OFFICER WORKSTATION */}
         {activeRole === 'scrutiny-officer' && (
           <div className="space-y-6">
-            {/* Scrutiny Officer Sub-Navigation Bar (Sub-Tab 1A, 1B, 1C) */}
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 p-2 rounded-2xl bg-white/90 backdrop-blur-2xl border border-[#d6e2f0] shadow-sm">
+            {/* Scrutiny Officer Sub-Navigation Bar */}
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 p-1.5 rounded-xl bg-white border border-[#E2E8F0] shadow-xs">
               <div
                 role="tablist"
                 aria-label="Scrutiny Officer Sub-Tabs"
@@ -311,19 +249,19 @@ export default function AictePramaanAiPage() {
                       role="tab"
                       aria-selected={isActive}
                       onClick={() => setActiveSubTab(tab.id)}
-                      className={`relative flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-mono transition-all ${
+                      className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs transition-colors ${
                         isActive
-                          ? 'bg-gradient-to-r from-amber-100 via-orange-50 to-emerald-50 text-[#17335f] border border-amber-300 shadow-sm font-bold'
-                          : 'text-[#5d6f86] hover:text-[#17335f] hover:bg-[#f4f8fd] border border-transparent'
+                          ? 'bg-blue-50 text-[#2563EB] border border-blue-200 font-semibold shadow-xs'
+                          : 'text-[#64748B] hover:text-[#1E293B] hover:bg-[#F8FAFC] border border-transparent'
                       }`}
                     >
-                      <span className="text-orange-400">{tab.icon}</span>
+                      <span className={isActive ? 'text-[#2563EB]' : 'text-[#64748B]'}>{tab.icon}</span>
                       <span>{tab.label}</span>
                       <span
-                        className={`px-2 py-0.5 rounded-full text-[10px] ${
+                        className={`px-2 py-0.5 rounded-full text-[10px] font-medium ${
                           isActive
-                            ? 'bg-orange-400 text-slate-950 font-extrabold'
-                            : 'bg-slate-950 text-slate-400'
+                            ? 'bg-[#2563EB] text-white'
+                            : 'bg-[#F1F5F9] text-[#64748B]'
                         }`}
                       >
                         {tab.badge}
@@ -333,18 +271,18 @@ export default function AictePramaanAiPage() {
                 })}
               </div>
 
-              {/* Quick Switcher to Apex Lucknow Hero Screen */}
+              {/* Quick Switcher to Apex Lucknow Case */}
               {activeSubTab !== 'evidence-workstation' && (
                 <button
                   onClick={() => {
                     setSelectedAppId('app-apex-lucknow')
                     setActiveSubTab('evidence-workstation')
                   }}
-                  className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 border border-rose-500/50 text-rose-200 font-mono text-xs font-semibold transition-all self-start lg:self-auto"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 border border-blue-200 text-[#2563EB] text-xs font-medium transition-colors self-start lg:self-auto"
                 >
-                  <Sparkles className="w-3.5 h-3.5 text-rose-400" />
+                  <Sparkles className="w-3.5 h-3.5 text-[#2563EB]" />
                   <span>
-                    Jump to Apex Lucknow Hero Split-Screen (PID: 1-492819201)
+                    Open Apex Lucknow Case (PID: 1-492819201)
                   </span>
                 </button>
               )}
@@ -395,7 +333,7 @@ export default function AictePramaanAiPage() {
         onClose={() => setIsCmdKOpen(false)}
       />
 
-      {/* Immutable Audit Trail DSC Sign-Off Modal */}
+      {/* Audit Trail DSC Sign-Off Modal */}
       <ImmutableSignOffModal
         isOpen={signOffModalState.isOpen}
         actionType={signOffModalState.actionType}

@@ -1,7 +1,6 @@
 'use client'
 
 import React from 'react'
-import { motion } from 'framer-motion'
 import { VerificationState } from '@/lib/pramaan-data'
 import {
   CheckCircle2,
@@ -21,7 +20,7 @@ interface StatutoryBadgeProps {
 export function StatutoryBadge({
   state,
   size = 'md',
-  pulse = true,
+  pulse = false,
 }: StatutoryBadgeProps) {
   const sizeClasses = {
     sm: 'px-2 py-0.5 text-[11px] gap-1.5',
@@ -33,55 +32,44 @@ export function StatutoryBadge({
     case 'Verified':
       return (
         <span
-          className={`inline-flex items-center font-mono font-medium rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-400/45 shadow-[0_0_16px_rgba(16,185,129,0.28)] ${sizeClasses}`}
+          className={`inline-flex items-center font-medium rounded-full bg-[#DCFCE7] text-[#166534] border border-[#BBF7D0] ${sizeClasses}`}
         >
-          <span className="relative flex h-2 w-2">
+          <span className="relative flex h-2 w-2 shrink-0">
             {pulse && (
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#166534] opacity-50" />
             )}
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#166534]" />
           </span>
-          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+          <CheckCircle2 className="w-3.5 h-3.5 text-[#166534] shrink-0" />
           <span>Verified</span>
         </span>
       )
 
     case 'Mismatch Detected':
       return (
-        <motion.span
-          animate={
-            pulse
-              ? {
-                  boxShadow: [
-                    '0 0 12px rgba(244,63,94,0.35)',
-                    '0 0 24px rgba(244,63,94,0.65)',
-                    '0 0 12px rgba(244,63,94,0.35)',
-                  ],
-                }
-              : undefined
-          }
-          transition={{ duration: 2, repeat: Infinity }}
-          className={`inline-flex items-center font-mono font-medium rounded-full bg-rose-500/20 text-rose-200 border border-rose-500/60 ${sizeClasses}`}
+        <span
+          className={`inline-flex items-center font-medium rounded-full bg-[#FEE2E2] text-[#991B1B] border border-[#FECACA] ${sizeClasses}`}
         >
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-90" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-rose-500" />
+          <span className="relative flex h-2 w-2 shrink-0">
+            {pulse && (
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#991B1B] opacity-50" />
+            )}
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#991B1B]" />
           </span>
-          <AlertOctagon className="w-3.5 h-3.5 text-rose-400 shrink-0" />
-          <span>Mismatch Detected</span>
-        </motion.span>
+          <AlertOctagon className="w-3.5 h-3.5 text-[#991B1B] shrink-0" />
+          <span>Discrepancy Found</span>
+        </span>
       )
 
     case 'Expired':
       return (
         <span
-          className={`inline-flex items-center font-mono font-medium rounded-full bg-orange-500/15 text-orange-300 border border-orange-400/50 shadow-[0_0_15px_rgba(249,115,22,0.3)] ${sizeClasses}`}
+          className={`inline-flex items-center font-medium rounded-full bg-[#FEF3C7] text-[#92400E] border border-[#FDE68A] ${sizeClasses}`}
         >
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-400" />
+          <span className="relative flex h-2 w-2 shrink-0">
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#92400E]" />
           </span>
-          <Clock className="w-3.5 h-3.5 text-orange-400 shrink-0" />
+          <Clock className="w-3.5 h-3.5 text-[#92400E] shrink-0" />
           <span>Expired</span>
         </span>
       )
@@ -89,9 +77,9 @@ export function StatutoryBadge({
     case 'Verification Pending':
       return (
         <span
-          className={`inline-flex items-center font-mono font-medium rounded-full bg-amber-500/15 text-amber-300 border border-amber-400/50 shadow-[0_0_15px_rgba(245,158,11,0.28)] ${sizeClasses}`}
+          className={`inline-flex items-center font-medium rounded-full bg-[#F1F5F9] text-[#64748B] border border-[#E2E8F0] ${sizeClasses}`}
         >
-          <RefreshCw className="w-3.5 h-3.5 text-amber-400 animate-spin shrink-0" />
+          <RefreshCw className="w-3.5 h-3.5 text-[#64748B] animate-spin shrink-0" />
           <span>Verification Pending</span>
         </span>
       )
@@ -99,9 +87,9 @@ export function StatutoryBadge({
     case 'Source Unavailable':
       return (
         <span
-          className={`inline-flex items-center font-mono font-medium rounded-full bg-purple-500/15 text-purple-200 border border-dashed border-purple-400/60 shadow-[0_0_14px_rgba(168,85,247,0.25)] ${sizeClasses}`}
+          className={`inline-flex items-center font-medium rounded-full bg-[#F1F5F9] text-[#64748B] border border-dashed border-[#CBD5E1] ${sizeClasses}`}
         >
-          <ServerOff className="w-3.5 h-3.5 text-purple-400 shrink-0" />
+          <ServerOff className="w-3.5 h-3.5 text-[#64748B] shrink-0" />
           <span>Source Unavailable</span>
         </span>
       )
@@ -109,15 +97,12 @@ export function StatutoryBadge({
     case 'Manual Review Required':
       return (
         <span
-          className={`inline-flex items-center font-mono font-medium rounded-full bg-orange-500/15 text-orange-200 border border-orange-400/50 shadow-[0_0_16px_rgba(6,182,212,0.3)] ${sizeClasses}`}
+          className={`inline-flex items-center font-medium rounded-full bg-[#FEF3C7] text-[#92400E] border border-[#FDE68A] ${sizeClasses}`}
         >
-          <span className="relative flex h-2 w-2">
-            {pulse && (
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75" />
-            )}
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-400" />
+          <span className="relative flex h-2 w-2 shrink-0">
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#92400E]" />
           </span>
-          <Eye className="w-3.5 h-3.5 text-orange-400 shrink-0" />
+          <Eye className="w-3.5 h-3.5 text-[#92400E] shrink-0" />
           <span>Manual Review Required</span>
         </span>
       )

@@ -16,7 +16,6 @@ import {
   ArrowUpRight,
   Search,
   Filter,
-  Sparkles,
   ShieldAlert,
   MapPin,
 } from 'lucide-react'
@@ -27,8 +26,7 @@ interface TiltBentoCardProps {
   subtext: string
   badgeText: string
   icon: React.ReactNode
-  accentColor: 'orange' | 'amber' | 'crimson' | 'emerald'
-  pulseCrimson?: boolean
+  accentColor: 'blue' | 'amber' | 'crimson' | 'emerald'
 }
 
 function TiltBentoCard({
@@ -38,7 +36,6 @@ function TiltBentoCard({
   badgeText,
   icon,
   accentColor,
-  pulseCrimson = false,
 }: TiltBentoCardProps) {
   const x = useMotionValue(0)
   const y = useMotionValue(0)
@@ -46,8 +43,8 @@ function TiltBentoCard({
   const mouseXSpring = useSpring(x, { stiffness: 260, damping: 22 })
   const mouseYSpring = useSpring(y, { stiffness: 260, damping: 22 })
 
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ['9deg', '-9deg'])
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ['-9deg', '9deg'])
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ['5deg', '-5deg'])
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ['-5deg', '5deg'])
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect()
@@ -64,20 +61,11 @@ function TiltBentoCard({
     y.set(0)
   }
 
-  const borderGlow = {
-    orange: 'border-orange-500/30 hover:border-orange-400/60 shadow-[0_8px_32px_rgba(6,182,212,0.15)]',
-    amber: 'border-amber-500/30 hover:border-amber-400/60 shadow-[0_8px_32px_rgba(245,158,11,0.15)]',
-    crimson:
-      'border-rose-500/50 hover:border-rose-400/80 shadow-[0_0_32px_rgba(244,63,94,0.3)]',
-    emerald:
-      'border-emerald-500/30 hover:border-emerald-400/60 shadow-[0_8px_32px_rgba(16,185,129,0.15)]',
-  }[accentColor]
-
   const badgeStyle = {
-    orange: 'bg-orange-500/15 text-orange-300 border-orange-400/30',
-    amber: 'bg-amber-500/15 text-amber-300 border-amber-400/30',
-    crimson: 'bg-rose-500/20 text-rose-200 border-rose-400/50',
-    emerald: 'bg-emerald-500/15 text-emerald-300 border-emerald-400/30',
+    blue: 'bg-blue-50 text-[#2563EB] border-blue-200',
+    amber: 'bg-[#FEF3C7] text-[#92400E] border-[#FDE68A]',
+    crimson: 'bg-[#FEE2E2] text-[#991B1B] border-[#FECACA]',
+    emerald: 'bg-[#DCFCE7] text-[#166534] border-[#BBF7D0]',
   }[accentColor]
 
   return (
@@ -89,42 +77,29 @@ function TiltBentoCard({
       }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      whileHover={{ scale: 1.02 }}
-      className={`relative rounded-2xl p-5 bg-white backdrop-blur-2xl border border-t-white/25 transition-colors cursor-default ${borderGlow}`}
+      whileHover={{ y: -2 }}
+      className="relative rounded-xl p-5 bg-white border border-[#E2E8F0] shadow-xs transition-shadow hover:shadow-md cursor-default"
     >
-      {pulseCrimson && (
-        <motion.div
-          animate={{
-            opacity: [0.25, 0.65, 0.25],
-          }}
-          transition={{ duration: 2.2, repeat: Infinity }}
-          className="pointer-events-none absolute -inset-px rounded-2xl border-2 border-rose-500/60 shadow-[0_0_28px_rgba(244,63,94,0.45)]"
-        />
-      )}
-
       <div
-        style={{ transform: 'translateZ(24px)' }}
+        style={{ transform: 'translateZ(16px)' }}
         className="flex items-start justify-between gap-3"
       >
-        <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
+        <div className="p-2.5 rounded-lg bg-[#F8FAFC] border border-[#E2E8F0] text-[#1E293B]">
           {icon}
         </div>
         <span
-          className={`px-2.5 py-0.5 rounded-full text-[11px] font-mono border ${badgeStyle}`}
+          className={`px-2.5 py-0.5 rounded-full text-xs font-medium border ${badgeStyle}`}
         >
           {badgeText}
         </span>
       </div>
 
-      <div style={{ transform: 'translateZ(32px)' }} className="mt-4">
-        <p className="text-xs font-medium text-slate-400">{title}</p>
-        <p className="text-2xl sm:text-3xl font-bold font-mono tracking-tight text-slate-800 mt-1">
+      <div style={{ transform: 'translateZ(20px)' }} className="mt-4">
+        <p className="text-xs font-medium text-[#64748B]">{title}</p>
+        <p className="text-2xl sm:text-3xl font-bold tracking-tight text-[#1E293B] mt-1 font-mono">
           {value}
         </p>
-        <p className="text-xs text-slate-300 mt-1.5 flex items-center gap-1.5">
-          {pulseCrimson && (
-            <span className="h-2 w-2 rounded-full bg-rose-500 animate-ping" />
-          )}
+        <p className="text-xs text-[#64748B] mt-1.5 flex items-center gap-1.5">
           <span>{subtext}</span>
         </p>
       </div>
@@ -161,140 +136,121 @@ export function RiskTriageCommandDeck({
 
   return (
     <div className="space-y-6">
-      {/* Hero Telemetry Banner with 3D Parallax Bento Cards */}
-      <motion.div
-        initial={{ opacity: 0, y: 14 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-        className="relative overflow-hidden rounded-3xl bg-white backdrop-blur-2xl border border-slate-200 border-t-white/25 p-6 lg:p-8 shadow-[0_8px_32px_rgba(0,0,0,0.55)]"
-      >
-        <div className="pointer-events-none absolute -top-24 -right-24 w-96 h-96 rounded-full bg-orange-500/10 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-24 -left-24 w-96 h-96 rounded-full bg-amber-500/10 blur-3xl" />
-
+      {/* Overview Telemetry Banner with KPI Cards */}
+      <div className="rounded-2xl bg-white border border-[#E2E8F0] p-6 shadow-xs">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-400/30 text-orange-300 text-xs font-mono mb-2">
-              <Sparkles className="w-3.5 h-3.5" />
-              NATIONAL EOA 2026–27 AUTONOMOUS RISK TRIAGE COMMAND DECK
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-50 border border-blue-200 text-[#2563EB] text-xs font-semibold mb-2">
+              NATIONAL EOA 2026–27 RISK TRIAGE QUEUE
             </div>
-            <h2 className="text-xl sm:text-2xl font-bold text-slate-800 tracking-tight">
-              Multi-Modal Document Forensics &amp; Cross-Entity Verification Queue
+            <h2 className="text-xl sm:text-2xl font-bold text-[#1E293B] tracking-tight">
+              Multi-Modal Document Forensics &amp; Verification Queue
             </h2>
-            <p className="text-xs sm:text-sm text-slate-300 mt-1 max-w-3xl">
-              Hover any KPI card for 3D parallax telemetry. Click any institution row below to launch the{' '}
-              <span className="text-orange-300 font-semibold">
-                Split-Screen Evidence &amp; Bounding-Box Workstation
-              </span>{' '}
-              with live Error Level Analysis (ELA) X-Ray.
+            <p className="text-xs sm:text-sm text-[#64748B] mt-1 max-w-3xl">
+              Real-time discrepancy detection and document cross-entity reconciliation. Select an institution from the queue below to review evidence, bounding-box annotations, and forensic details.
             </p>
           </div>
 
-          <div className="flex items-center gap-3 self-start lg:self-center px-4 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 font-mono text-xs">
+          <div className="flex items-center gap-3 self-start lg:self-center px-4 py-2 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-xs">
             <div>
-              <div className="text-[10px] text-slate-400 uppercase">
+              <div className="text-[10px] text-[#64748B] uppercase font-medium">
                 Active Rule Pack
               </div>
-              <div className="text-orange-300 font-semibold">
+              <div className="text-[#1E293B] font-semibold font-mono">
                 APH_2024_27_DROOLS_v4.2
               </div>
             </div>
-            <div className="h-7 w-px bg-white/10" />
+            <div className="h-6 w-px bg-[#E2E8F0]" />
             <div>
-              <div className="text-[10px] text-slate-400 uppercase">
+              <div className="text-[10px] text-[#64748B] uppercase font-medium">
                 Forensic Threshold
               </div>
-              <div className="text-emerald-300 font-semibold">
+              <div className="text-[#166534] font-semibold font-mono">
                 ELA &gt; 0.35 Flagged
               </div>
             </div>
           </div>
         </div>
 
-        {/* 4 Interactive 3D-Tilt Glass Bento Cards */}
+        {/* 4 Interactive KPI Cards */}
         <div
           style={{ perspective: '1200px' }}
           className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4"
         >
           <TiltBentoCard
-            title="Total EoA Applications (2026-27)"
+            title="Total Applications (2026-27)"
             value="8,420"
-            subtext="+14% fast-tracked via AI zero-defect parity"
-            badgeText="+14% Fast-Track"
-            accentColor="orange"
-            icon={<FileStack className="w-5 h-5 text-orange-400" />}
+            subtext="+14% verified via zero-discrepancy parity"
+            badgeText="8,420 Total"
+            accentColor="blue"
+            icon={<FileStack className="w-5 h-5 text-[#2563EB]" />}
           />
           <TiltBentoCard
-            title="Cross-Document Mismatches Flagged"
+            title="Discrepancies Found"
             value="312"
-            subtext="Requires Officer Review (Khasra/Area/Intake)"
-            badgeText="Requires Review"
+            subtext="Requires Officer Review (Plot/Area/Intake)"
+            badgeText="Pending Review"
             accentColor="amber"
-            icon={<AlertTriangle className="w-5 h-5 text-amber-400" />}
+            icon={<AlertTriangle className="w-5 h-5 text-[#92400E]" />}
           />
           <TiltBentoCard
-            title="Suspected ELA / Metadata Forgeries"
+            title="Suspected Document Tampering"
             value="47"
-            subtext="High Priority Alert — PDF XRef / JPEG Splice"
-            badgeText="CRITICAL ALERT"
+            subtext="Priority Attention — PDF XRef / ELA Variance"
+            badgeText="Action Required"
             accentColor="crimson"
-            pulseCrimson
-            icon={<Flame className="w-5 h-5 text-rose-400" />}
+            icon={<Flame className="w-5 h-5 text-[#991B1B]" />}
           />
           <TiltBentoCard
-            title="Avg. Preliminary Scrutiny Time"
+            title="Avg. Scrutiny Time"
             value="1m 42s"
             subtext="Down from 4.5 hours manual committee review"
-            badgeText="99.3% Faster"
+            badgeText="Automated"
             accentColor="emerald"
-            icon={<Timer className="w-5 h-5 text-emerald-400" />}
+            icon={<Timer className="w-5 h-5 text-[#166534]" />}
           />
         </div>
-      </motion.div>
+      </div>
 
-      {/* Interactive Application Triage Table */}
-      <motion.div
-        initial={{ opacity: 0, y: 18 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.45, delay: 0.1 }}
-        className="rounded-3xl bg-white backdrop-blur-2xl border border-slate-200 border-t-white/25 p-5 lg:p-6 shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
-      >
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-5 border-b border-slate-200">
+      {/* Application Triage Table Card */}
+      <div className="rounded-2xl bg-white border border-[#E2E8F0] p-5 lg:p-6 shadow-xs">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-5 border-b border-[#E2E8F0]">
           <div>
-            <h3 className="text-base sm:text-lg font-bold text-slate-800 flex items-center gap-2">
-              <ShieldAlert className="w-5 h-5 text-orange-400" />
-              Statutory Application Triage Queue (6-State Verification Taxonomy)
+            <h3 className="text-base sm:text-lg font-bold text-[#1E293B] flex items-center gap-2">
+              <ShieldAlert className="w-5 h-5 text-[#2563EB]" />
+              Application Review Queue
             </h3>
-            <p className="text-xs text-slate-400 mt-0.5">
-              Filter by any of the 6 statutory verification states or click an institution to inspect bounding-box forensic evidence.
+            <p className="text-xs text-[#64748B] mt-0.5">
+              Filter by statutory verification status or click any institution to inspect evidence and supporting documents.
             </p>
           </div>
 
           {/* Search Input */}
           <div className="relative w-full lg:w-80">
-            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-[#64748B] absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Filter by PID, College, City..."
-              className="w-full pl-9 pr-4 py-2 rounded-xl bg-slate-950/90 border border-white/15 text-xs text-slate-800 placeholder:text-slate-500 focus:outline-none focus:border-orange-400"
+              placeholder="Filter by PID, institution, city..."
+              className="w-full pl-9 pr-4 py-2 rounded-lg bg-white border border-[#E2E8F0] text-xs text-[#1E293B] placeholder:text-[#64748B] focus:outline-none focus:border-[#2563EB] focus:ring-1 focus:ring-[#2563EB]"
             />
           </div>
         </div>
 
-        {/* 6 Statutory Verification State Filter Pills */}
+        {/* Status Filter Pills */}
         <div className="flex flex-wrap items-center gap-2 py-4">
-          <span className="text-xs font-mono text-slate-400 flex items-center gap-1 mr-1">
-            <Filter className="w-3.5 h-3.5 text-orange-400" />
-            State Filter:
+          <span className="text-xs text-[#64748B] font-medium flex items-center gap-1 mr-1">
+            <Filter className="w-3.5 h-3.5 text-[#64748B]" />
+            Status:
           </span>
 
           <button
             onClick={() => setSelectedStateFilter('ALL')}
-            className={`px-3 py-1.5 rounded-full text-xs font-mono transition-all border ${
+            className={`px-3 py-1.5 rounded-full text-xs transition-colors border ${
               selectedStateFilter === 'ALL'
-                ? 'bg-orange-500/20 text-orange-200 border-orange-400 shadow-[0_0_15px_rgba(6,182,212,0.3)]'
-                : 'bg-slate-950/60 text-slate-400 border-slate-200 hover:text-slate-800'
+                ? 'bg-blue-50 text-[#2563EB] border-blue-200 font-semibold'
+                : 'bg-[#F1F5F9] text-[#64748B] border-[#E2E8F0] hover:text-[#1E293B] hover:bg-white'
             }`}
           >
             All Applications ({applications.length})
@@ -311,15 +267,15 @@ export function RiskTriageCommandDeck({
                 onClick={() =>
                   setSelectedStateFilter(active ? 'ALL' : st.state)
                 }
-                className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-mono transition-all border ${
+                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs transition-colors border ${
                   active
-                    ? `${st.bgClass} ${st.colorClass} ${st.borderClass} scale-105`
-                    : 'bg-slate-950/60 text-slate-300 border-slate-200 hover:border-white/25'
+                    ? `${st.bgClass} ${st.colorClass} ${st.borderClass} font-semibold ring-1 ring-current`
+                    : 'bg-[#F1F5F9] text-[#64748B] border-[#E2E8F0] hover:bg-white hover:text-[#1E293B]'
                 }`}
               >
                 <span className={`h-2 w-2 rounded-full ${st.dotClass}`} />
                 <span>{st.label}</span>
-                <span className="px-1.5 py-0.2 rounded bg-black/30 text-[10px]">
+                <span className="px-1.5 py-0.2 rounded bg-black/5 text-[10px] font-medium">
                   {count}
                 </span>
               </button>
@@ -327,163 +283,160 @@ export function RiskTriageCommandDeck({
           })}
         </div>
 
-        {/* Table */}
-        <div className="overflow-x-auto mt-2">
+        {/* Table Container */}
+        <div className="overflow-x-auto mt-2 rounded-xl border border-[#E2E8F0]">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b border-slate-200 text-[11px] font-mono uppercase text-slate-400 bg-slate-950/40">
-                <th className="py-3 px-4">Permanent ID (PID)</th>
+              <tr className="border-b border-[#E2E8F0] text-xs font-semibold text-[#64748B] bg-[#F8FAFC]">
+                <th className="py-3 px-4">Permanent ID</th>
                 <th className="py-3 px-4">Technical Institution &amp; Location</th>
-                <th className="py-3 px-4">Applied Category &amp; Program</th>
-                <th className="py-3 px-4">AI Forensic Risk</th>
-                <th className="py-3 px-4">6-State Verification Status</th>
-                <th className="py-3 px-4">Flags</th>
+                <th className="py-3 px-4">Category &amp; Program</th>
+                <th className="py-3 px-4">AI Risk Score</th>
+                <th className="py-3 px-4">Verification Status</th>
+                <th className="py-3 px-4">Findings</th>
                 <th className="py-3 px-4 text-right">Action</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-white/5 text-xs">
+            <tbody className="divide-y divide-[#E2E8F0] text-xs">
               {filteredApps.length === 0 && (
                 <tr>
                   <td colSpan={7} className="py-12 px-4 text-center">
-                    <div className="text-orange-200 font-semibold">No applications match these filters.</div>
-                    <p className="text-xs text-slate-400 mt-1">Try a different search or choose “All Applications”.</p>
+                    <div className="text-[#1E293B] font-semibold">No applications match these filters.</div>
+                    <p className="text-xs text-[#64748B] mt-1">Try a different search or choose “All Applications”.</p>
                     <button
                       type="button"
                       onClick={() => { setSearchQuery(''); setSelectedStateFilter('ALL') }}
-                      className="mt-4 px-4 py-2 rounded-xl bg-orange-400 text-slate-950 text-xs font-bold hover:bg-orange-300 transition-colors"
+                      className="mt-3 px-3.5 py-1.5 rounded-lg bg-blue-50 text-[#2563EB] text-xs font-semibold hover:bg-blue-100 transition-colors border border-blue-200"
                     >
                       Clear filters
                     </button>
                   </td>
                 </tr>
               )}
-              {filteredApps.map((app, idx) => {
+              {filteredApps.map((app) => {
                 const isSelected = app.id === selectedAppId
                 return (
-                  <motion.tr
+                  <tr
                     key={app.id}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.25, delay: idx * 0.05 }}
                     onClick={() => onSelectApplication(app)}
                     className={`group cursor-pointer transition-colors ${
                       isSelected
-                        ? 'bg-orange-500/10 hover:bg-orange-500/15'
-                        : 'hover:bg-white/[0.04]'
+                        ? 'bg-blue-50/70 hover:bg-blue-50'
+                        : 'hover:bg-[#F8FAFC]'
                     }`}
                   >
-                    <td className="py-4 px-4 font-mono whitespace-nowrap">
-                      <div className="font-semibold text-orange-300 group-hover:text-orange-200 flex items-center gap-1.5">
+                    <td className="py-3.5 px-4 font-mono whitespace-nowrap">
+                      <div className="font-semibold text-[#2563EB] flex items-center gap-1.5">
                         {isSelected && (
-                          <span className="h-2 w-2 rounded-full bg-orange-400 animate-ping" />
+                          <span className="h-1.5 w-1.5 rounded-full bg-[#2563EB]" />
                         )}
                         {app.pid}
                       </div>
-                      <div className="text-[10px] text-slate-500 mt-0.5">
+                      <div className="text-[11px] text-[#64748B] mt-0.5 font-sans">
                         {app.submittedAt}
                       </div>
                     </td>
 
-                    <td className="py-4 px-4">
-                      <div className="font-semibold text-slate-800 group-hover:text-orange-100">
+                    <td className="py-3.5 px-4">
+                      <div className="font-semibold text-[#1E293B]">
                         {app.name}
                       </div>
-                      <div className="text-[11px] text-slate-400 flex items-center gap-1 mt-0.5">
-                        <MapPin className="w-3 h-3 text-slate-500" />
+                      <div className="text-[11px] text-[#64748B] flex items-center gap-1 mt-0.5">
+                        <MapPin className="w-3 h-3 text-[#94A3B8]" />
                         {app.city}, {app.state} • {app.region} Region
                       </div>
                     </td>
 
-                    <td className="py-4 px-4">
-                      <div className="text-slate-200 font-medium">
+                    <td className="py-3.5 px-4">
+                      <div className="text-[#1E293B] font-medium">
                         {app.category}
                       </div>
-                      <div className="text-[11px] text-slate-400 mt-0.5">
+                      <div className="text-[11px] text-[#64748B] mt-0.5">
                         {app.programFocus}
                       </div>
                     </td>
 
-                    <td className="py-4 px-4 font-mono">
+                    <td className="py-3.5 px-4">
                       <div className="flex items-center gap-2">
-                        <div className="w-20 h-2 rounded-full bg-slate-800 overflow-hidden">
+                        <div className="w-16 h-2 rounded-full bg-[#E2E8F0] overflow-hidden">
                           <div
                             className={`h-full rounded-full ${
                               app.aiRiskScore >= 70
-                                ? 'bg-gradient-to-r from-amber-500 to-rose-500'
+                                ? 'bg-[#DC2626]'
                                 : app.aiRiskScore >= 40
-                                  ? 'bg-amber-400'
-                                  : 'bg-emerald-400'
+                                  ? 'bg-[#D97706]'
+                                  : 'bg-[#16A34A]'
                             }`}
                             style={{ width: `${app.aiRiskScore}%` }}
                           />
                         </div>
                         <span
-                          className={`font-bold ${
+                          className={`font-semibold font-mono ${
                             app.aiRiskScore >= 70
-                              ? 'text-rose-400'
+                              ? 'text-[#991B1B]'
                               : app.aiRiskScore >= 40
-                                ? 'text-amber-300'
-                                : 'text-emerald-300'
+                                ? 'text-[#92400E]'
+                                : 'text-[#166534]'
                           }`}
                         >
-                          {app.aiRiskScore}/100
+                          {app.aiRiskScore}
                         </span>
                       </div>
-                      <div className="text-[10px] text-slate-500 mt-0.5">
-                        ELA Peak: {app.certificateData.elaMaxVariance.toFixed(2)}
+                      <div className="text-[10px] text-[#64748B] mt-0.5 font-mono">
+                        ELA: {app.certificateData.elaMaxVariance.toFixed(2)}
                       </div>
                     </td>
 
-                    <td className="py-4 px-4 whitespace-nowrap">
+                    <td className="py-3.5 px-4 whitespace-nowrap">
                       <StatutoryBadge state={app.status} size="sm" />
                     </td>
 
-                    <td className="py-4 px-4 font-mono whitespace-nowrap">
+                    <td className="py-3.5 px-4 whitespace-nowrap">
                       <div className="flex items-center gap-1.5">
                         {app.flagsCount.critical > 0 && (
-                          <span className="px-2 py-0.5 rounded bg-rose-500/20 border border-rose-500/40 text-rose-300 text-[10px]">
-                            {app.flagsCount.critical} CRIT
+                          <span className="px-2 py-0.5 rounded-full bg-[#FEE2E2] border border-[#FECACA] text-[#991B1B] text-[10px] font-semibold">
+                            {app.flagsCount.critical} Critical
                           </span>
                         )}
                         {app.flagsCount.warning > 0 && (
-                          <span className="px-2 py-0.5 rounded bg-amber-500/20 border border-amber-500/40 text-amber-300 text-[10px]">
-                            {app.flagsCount.warning} WARN
+                          <span className="px-2 py-0.5 rounded-full bg-[#FEF3C7] border border-[#FDE68A] text-[#92400E] text-[10px] font-medium">
+                            {app.flagsCount.warning} Warning
                           </span>
                         )}
                         {app.flagsCount.info > 0 && (
-                          <span className="px-2 py-0.5 rounded bg-purple-500/20 border border-purple-500/40 text-purple-300 text-[10px]">
-                            {app.flagsCount.info} INFO
+                          <span className="px-2 py-0.5 rounded-full bg-[#F1F5F9] border border-[#E2E8F0] text-[#64748B] text-[10px] font-medium">
+                            {app.flagsCount.info} Info
                           </span>
                         )}
                         {app.flagsCount.critical === 0 &&
                           app.flagsCount.warning === 0 &&
                           app.flagsCount.info === 0 && (
-                            <span className="text-emerald-400 text-[11px]">
-                              0 Flags
+                            <span className="text-[#166534] text-[11px] font-medium">
+                              0 Discrepancies
                             </span>
                           )}
                       </div>
                     </td>
 
-                    <td className="py-4 px-4 text-right whitespace-nowrap">
+                    <td className="py-3.5 px-4 text-right whitespace-nowrap">
                       <button
                         onClick={(e) => {
                           e.stopPropagation()
                           onSelectApplication(app)
                         }}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-orange-500/15 hover:bg-orange-400 text-orange-200 hover:text-slate-950 border border-orange-400/40 font-mono text-xs font-semibold transition-all"
+                        className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-[#2563EB] border border-blue-200 text-xs font-medium transition-colors"
                       >
-                        <span>Inspect Evidence</span>
+                        <span>Review</span>
                         <ArrowUpRight className="w-3.5 h-3.5" />
                       </button>
                     </td>
-                  </motion.tr>
+                  </tr>
                 )
               })}
             </tbody>
           </table>
         </div>
-      </motion.div>
+      </div>
     </div>
   )
 }
