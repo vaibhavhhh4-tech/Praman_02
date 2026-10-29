@@ -981,46 +981,33 @@ export function EvidenceWorkstation({
         </div>
       </div>
 
-      {/* BOTTOM STICKY HUMAN-IN-THE-LOOP SAFEGUARD BAR */}
-      <div className="fixed bottom-0 left-0 right-0 z-30 bg-slate-950/90 backdrop-blur-2xl border-t border-orange-500/30 shadow-[0_-10px_40px_rgba(0,0,0,0.85)] px-4 lg:px-8 py-3">
-        <div className="max-w-[1600px] mx-auto flex flex-col xl:flex-row items-start xl:items-center justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <div className="p-2 rounded-xl bg-amber-500/15 border border-amber-400/40 text-amber-300 shrink-0">
-              <Scale className="w-4 h-4" />
+      <section className="mt-8 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm" aria-label="Review safeguards and actions">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+          <div className="flex items-start gap-3">
+            <div className="rounded-xl border border-amber-200 bg-amber-50 p-2 text-amber-700 shrink-0">
+              <Scale className="h-4 w-4" />
             </div>
             <div>
-              <div className="text-[10px] font-mono uppercase tracking-wider text-amber-300 font-bold">
-                HUMAN-IN-THE-LOOP STATUTORY SAFEGUARD (APH 2024–27 CLAUSE 1.4)
-              </div>
-              <p className="text-xs text-slate-200 font-medium">
-                AI outputs are preliminary decision-support indicators only. Final regulatory decision rests with competent AICTE authorities.
+              <h2 className="text-sm font-bold text-slate-800">Human review safeguard</h2>
+              <p className="mt-1 max-w-2xl text-xs leading-5 text-slate-600">
+                AI findings are preliminary decision-support indicators. Final regulatory decisions remain with authorised AICTE officers.
               </p>
             </div>
           </div>
-
-          <div className="flex flex-wrap items-center gap-2.5 w-full xl:w-auto justify-end">
-            <button
-              onClick={() => onOpenSignOffModal('deficiency')}
-              className="px-3.5 py-2 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 border border-rose-500/50 text-rose-200 font-mono text-xs font-semibold transition-all"
-            >
-              Draft Deficiency Rectification Notice
+          <div className="flex flex-wrap items-center gap-2">
+            <button onClick={() => onOpenSignOffModal('deficiency')} className="rounded-lg border border-rose-200 bg-rose-50 px-3 py-2 text-xs font-semibold text-rose-800 transition-colors hover:bg-rose-100">
+              Draft correction notice
             </button>
-            <button
-              onClick={() => onOpenSignOffModal('evc')}
-              className="px-3.5 py-2 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-400/50 text-amber-200 font-mono text-xs font-semibold transition-all"
-            >
-              Trigger Physical EVC Inspection
+            <button onClick={() => onOpenSignOffModal('evc')} className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs font-semibold text-amber-800 transition-colors hover:bg-amber-100">
+              Request physical verification
             </button>
-            <button
-              onClick={() => onOpenSignOffModal('override')}
-              className="px-4 py-2 rounded-xl bg-gradient-to-r from-orange-400 to-emerald-400 hover:brightness-110 text-slate-950 font-mono text-xs font-bold shadow-[0_0_20px_rgba(6,182,212,0.4)] transition-all flex items-center gap-1.5"
-            >
-              <ShieldCheck className="w-4 h-4" />
-              <span>Override &amp; Mark Verified (Requires Officer DSC &amp; Reason Code)</span>
+            <button onClick={() => onOpenSignOffModal('override')} className="flex items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-2 text-xs font-semibold text-white transition-colors hover:bg-blue-700">
+              <ShieldCheck className="h-4 w-4" />
+              Mark as verified
             </button>
           </div>
         </div>
-      </div>
+      </section>
     </div>
   )
 }
