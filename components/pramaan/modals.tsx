@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   APH_CLAUSES_DATABASE,
@@ -25,6 +25,15 @@ interface AphSearchModalProps {
 
 export function AphSearchModal({ isOpen, onClose }: AphSearchModalProps) {
   const [query, setQuery] = useState('')
+
+  useEffect(() => {
+    if (!isOpen) return
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') onClose()
+    }
+    window.addEventListener('keydown', handleEscape)
+    return () => window.removeEventListener('keydown', handleEscape)
+  }, [isOpen, onClose])
 
   const filtered = APH_CLAUSES_DATABASE.filter(
     (c) =>

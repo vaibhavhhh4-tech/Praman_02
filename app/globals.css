@@ -61,13 +61,24 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-[#050811] text-slate-100;
+    @apply bg-[#071426] text-slate-100;
+    background-image: radial-gradient(circle at 12% 8%, rgba(34, 211, 238, 0.13), transparent 28rem), radial-gradient(circle at 88% 18%, rgba(251, 191, 36, 0.12), transparent 30rem), linear-gradient(135deg, #071426 0%, #101b39 52%, #132542 100%);
+  }
+  button, input, select, textarea {
+    font: inherit;
+  }
+  button:not(:disabled) {
+    cursor: pointer;
+  }
+  button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+    outline: 3px solid rgba(125, 211, 252, 0.8);
+    outline-offset: 2px;
   }
 }
 
 /* Custom Sovereign Cyber-Glass utilities */
 .cyber-glass {
-  background: rgba(15, 23, 42, 0.58);
+  background: linear-gradient(145deg, rgba(21, 44, 78, 0.78), rgba(13, 25, 51, 0.72));
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border: 1px solid rgba(255, 255, 255, 0.1);

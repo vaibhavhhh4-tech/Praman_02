@@ -342,6 +342,21 @@ export function RiskTriageCommandDeck({
               </tr>
             </thead>
             <tbody className="divide-y divide-white/5 text-xs">
+              {filteredApps.length === 0 && (
+                <tr>
+                  <td colSpan={7} className="py-12 px-4 text-center">
+                    <div className="text-cyan-200 font-semibold">No applications match these filters.</div>
+                    <p className="text-xs text-slate-400 mt-1">Try a different search or choose “All Applications”.</p>
+                    <button
+                      type="button"
+                      onClick={() => { setSearchQuery(''); setSelectedStateFilter('ALL') }}
+                      className="mt-4 px-4 py-2 rounded-xl bg-cyan-400 text-slate-950 text-xs font-bold hover:bg-cyan-300 transition-colors"
+                    >
+                      Clear filters
+                    </button>
+                  </td>
+                </tr>
+              )}
               {filteredApps.map((app, idx) => {
                 const isSelected = app.id === selectedAppId
                 return (
