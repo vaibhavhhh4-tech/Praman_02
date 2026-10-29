@@ -75,6 +75,29 @@
   }
 }
 
+/* Keep controls consistent with the bright public-portal reference. */
+button[class*="bg-slate-950"],
+button[class*="bg-slate-900"],
+button[class*="bg-black"] {
+  background: #ffb703 !important;
+  color: #102a56 !important;
+  border-color: #f59e0b !important;
+  box-shadow: 0 2px 8px rgba(180, 120, 0, 0.16);
+}
+
+button[class*="bg-slate-950"]:hover,
+button[class*="bg-slate-900"]:hover,
+button[class*="bg-black"]:hover {
+  background: #f59e0b !important;
+  color: #102a56 !important;
+}
+
+button[class*="bg-slate-950"] svg,
+button[class*="bg-slate-900"] svg,
+button[class*="bg-black"] svg {
+  color: currentColor !important;
+}
+
 /* Custom Sovereign Cyber-Glass utilities */
 .cyber-glass {
   background: linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(241, 247, 255, 0.92));
