@@ -109,15 +109,15 @@ export function StatutoryBadge({
     case 'Manual Review Required':
       return (
         <span
-          className={`inline-flex items-center font-mono font-medium rounded-full bg-cyan-500/15 text-cyan-200 border border-cyan-400/50 shadow-[0_0_16px_rgba(6,182,212,0.3)] ${sizeClasses}`}
+          className={`inline-flex items-center font-mono font-medium rounded-full bg-orange-500/15 text-orange-200 border border-orange-400/50 shadow-[0_0_16px_rgba(6,182,212,0.3)] ${sizeClasses}`}
         >
           <span className="relative flex h-2 w-2">
             {pulse && (
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" />
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75" />
             )}
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-400" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-400" />
           </span>
-          <Eye className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
+          <Eye className="w-3.5 h-3.5 text-orange-400 shrink-0" />
           <span>Manual Review Required</span>
         </span>
       )

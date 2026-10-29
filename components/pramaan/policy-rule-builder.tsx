@@ -33,10 +33,10 @@ export function PolicyRuleBuilder() {
 
   return (
     <div className="space-y-6">
-      <div className="rounded-3xl bg-slate-900/60 backdrop-blur-2xl border border-white/10 border-t-white/25 p-6 lg:p-8 shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-6 border-b border-white/10">
+      <div className="rounded-3xl bg-white backdrop-blur-2xl border border-slate-200 border-t-white/25 p-6 lg:p-8 shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-6 border-b border-slate-200">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-400/30 text-cyan-300 text-xs font-mono mb-2">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-400/30 text-orange-300 text-xs font-mono mb-2">
               <Sliders className="w-3.5 h-3.5" />
               POLICY ADMIN • NO-CODE APH 2024–27 DROOLS RULE ENGINE STUDIO
             </div>
@@ -50,7 +50,7 @@ export function PolicyRuleBuilder() {
 
           <button
             onClick={handleSimulateDroolsCompile}
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-cyan-400 to-emerald-400 text-slate-950 font-mono text-xs font-bold shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:brightness-110 transition-all self-start lg:self-center"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-slate-950 font-mono text-xs font-bold shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:brightness-110 transition-all self-start lg:self-center"
           >
             <Play className="w-4 h-4 fill-slate-950" />
             <span>Hot-Reload Java 21 Drools KnowledgeBase</span>
@@ -70,7 +70,7 @@ export function PolicyRuleBuilder() {
 
         {/* Live Parametric Sliders */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 my-6">
-          <div className="p-4 rounded-2xl bg-slate-950/80 border border-white/10 space-y-2">
+          <div className="p-4 rounded-2xl bg-slate-50/80 border border-slate-200 space-y-2">
             <div className="flex items-center justify-between font-mono text-xs">
               <span className="text-slate-400">ELA Tamper Cutoff</span>
               <span className="text-rose-400 font-bold">
@@ -91,10 +91,10 @@ export function PolicyRuleBuilder() {
             </p>
           </div>
 
-          <div className="p-4 rounded-2xl bg-slate-950/80 border border-white/10 space-y-2">
+          <div className="p-4 rounded-2xl bg-slate-50/80 border border-slate-200 space-y-2">
             <div className="flex items-center justify-between font-mono text-xs">
               <span className="text-slate-400">AI &amp; DS PC Terminal Ratio</span>
-              <span className="text-cyan-300 font-bold">
+              <span className="text-orange-300 font-bold">
                 1 : {pcRatioStudentPerTerminal} Students
               </span>
             </div>
@@ -107,7 +107,7 @@ export function PolicyRuleBuilder() {
               onChange={(e) =>
                 setPcRatioStudentPerTerminal(Number(e.target.value))
               }
-              className="w-full accent-cyan-400 cursor-pointer"
+              className="w-full accent-orange-400 cursor-pointer"
             />
             <p className="text-[11px] text-slate-400">
               For 180 seats, requires{' '}
@@ -115,7 +115,7 @@ export function PolicyRuleBuilder() {
             </p>
           </div>
 
-          <div className="p-4 rounded-2xl bg-slate-950/80 border border-white/10 space-y-2">
+          <div className="p-4 rounded-2xl bg-slate-50/80 border border-slate-200 space-y-2">
             <div className="flex items-center justify-between font-mono text-xs">
               <span className="text-slate-400">Faculty-Student Ratio (FSR)</span>
               <span className="text-amber-300 font-bold">1 : {fsrRatio}</span>
@@ -143,11 +143,11 @@ export function PolicyRuleBuilder() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.2, delay: idx * 0.04 }}
-              className="p-4 rounded-2xl bg-slate-950/75 border border-white/10 flex flex-col lg:flex-row lg:items-center justify-between gap-4"
+              className="p-4 rounded-2xl bg-slate-50/75 border border-slate-200 flex flex-col lg:flex-row lg:items-center justify-between gap-4"
             >
               <div className="space-y-1">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="px-2.5 py-0.5 rounded bg-cyan-500/15 border border-cyan-400/30 font-mono text-xs font-bold text-cyan-300">
+                  <span className="px-2.5 py-0.5 rounded bg-orange-500/15 border border-orange-400/30 font-mono text-xs font-bold text-orange-300">
                     {clause.clauseId}
                   </span>
                   <span className="text-xs font-mono text-slate-400">
@@ -169,9 +169,9 @@ export function PolicyRuleBuilder() {
                 <p className="text-xs text-slate-300">{clause.normRequirement}</p>
               </div>
 
-              <div className="lg:w-96 shrink-0 p-3 rounded-xl bg-slate-900 border border-white/10 font-mono text-[11px]">
+              <div className="lg:w-96 shrink-0 p-3 rounded-xl bg-slate-900 border border-slate-200 font-mono text-[11px]">
                 <div className="flex items-center justify-between text-slate-400 mb-1">
-                  <span className="flex items-center gap-1 text-cyan-300">
+                  <span className="flex items-center gap-1 text-orange-300">
                     <Code2 className="w-3.5 h-3.5" />
                     {clause.automatedEngine}
                   </span>

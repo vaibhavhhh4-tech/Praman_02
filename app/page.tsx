@@ -76,6 +76,7 @@ export default function AictePramaanAiPage() {
   const [applications, setApplications] =
     useState<InstitutionApplication[]>(INITIAL_APPLICATIONS)
   const [activeRole, setActiveRole] = useState<RoleView>('scrutiny-officer')
+  const [hasEnteredPortal, setHasEnteredPortal] = useState(false)
   const [activeSubTab, setActiveSubTab] =
     useState<ScrutinySubTab>('triage-deck')
   const [selectedAppId, setSelectedAppId] =
@@ -179,7 +180,7 @@ export default function AictePramaanAiPage() {
   ]
 
   return (
-    <div className="min-h-screen relative bg-[#050811] text-slate-100 cyber-grid-bg">
+    <div className="min-h-screen relative bg-[#f4f8fd] text-[#17335f] cyber-grid-bg">
       {/* Animated Sovereign Cyber-Glass Aurora Mesh Background Orbs */}
       <div className="pointer-events-none fixed inset-0 overflow-hidden z-0">
         <motion.div
@@ -216,14 +217,16 @@ export default function AictePramaanAiPage() {
         />
       </div>
 
-      {/* Global Top Glass Navigation Header */}
-      <TopGlassHeader
-        activeRole={activeRole}
-        onSelectRole={setActiveRole}
-        onOpenCmdK={() => setIsCmdKOpen(true)}
-        onSimulateLiveSubmission={handleSimulateLiveSubmission}
-        isSimulating={isSimulating}
-      />
+      {/* Workspace navigation appears after entering the portal. */}
+      {hasEnteredPortal && (
+        <TopGlassHeader
+          activeRole={activeRole}
+          onSelectRole={setActiveRole}
+          onOpenCmdK={() => setIsCmdKOpen(true)}
+          onSimulateLiveSubmission={handleSimulateLiveSubmission}
+          isSimulating={isSimulating}
+        />
+      )}
 
       {/* Toast Notification Banner */}
       <AnimatePresence>
@@ -232,7 +235,7 @@ export default function AictePramaanAiPage() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed top-28 right-6 z-50 max-w-md rounded-2xl bg-slate-900/95 backdrop-blur-2xl border border-cyan-400/50 p-4 shadow-[0_0_35px_rgba(6,182,212,0.4)] flex items-start gap-3"
+            className="fixed top-28 right-6 z-50 max-w-md rounded-2xl bg-slate-900/95 backdrop-blur-2xl border border-orange-400/50 p-4 shadow-[0_0_35px_rgba(6,182,212,0.4)] flex items-start gap-3"
           >
             <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
             <div className="text-xs font-mono text-slate-100 leading-relaxed">
@@ -242,13 +245,59 @@ export default function AictePramaanAiPage() {
         )}
       </AnimatePresence>
 
+      {!hasEnteredPortal && (
+        <section className="relative z-10 max-w-6xl mx-auto px-4 lg:px-8 py-12 lg:py-20">
+          <div className="grid lg:grid-cols-[1.15fr_0.85fr] gap-8 items-center">
+            <div className="space-y-6">
+              <span className="inline-flex rounded-full bg-amber-100 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-[#8a5a00] border border-amber-300">
+                Government approval workspace
+              </span>
+              <h1 className="text-4xl lg:text-6xl font-black tracking-tight text-[#0b2d63]">
+                Welcome to <span className="text-orange-500">PRAMAAN-AI</span>
+              </h1>
+              <p className="max-w-2xl text-lg leading-8 text-[#52647b]">
+                A friendly, transparent workspace for application scrutiny, evidence review, and policy administration.
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <button
+                  type="button"
+                  onClick={() => setHasEnteredPortal(true)}
+                  className="rounded-full bg-amber-400 px-6 py-3 font-bold text-[#17335f] shadow-md hover:bg-amber-300"
+                >
+                  Enter portal
+                </button>
+                <button
+                  type="button"
+                  onClick={() => { setActiveRole('nodal-officer'); setHasEnteredPortal(true) }}
+                  className="rounded-full border-2 border-[#0b2d63] bg-white px-6 py-3 font-bold text-[#0b2d63] hover:bg-blue-50"
+                >
+                  Nodal officer login
+                </button>
+              </div>
+            </div>
+            <div className="rounded-3xl border border-amber-300 bg-white/95 p-6 shadow-xl">
+              <h2 className="text-xl font-extrabold text-[#0b2d63]">Demo login credentials</h2>
+              <p className="mt-2 text-sm text-[#52647b]">Use these mock credentials to explore each workspace.</p>
+              <dl className="mt-5 space-y-3 text-sm">
+                <div className="flex justify-between rounded-xl bg-blue-50 px-4 py-3"><dt className="font-semibold text-[#52647b]">User ID</dt><dd className="font-mono font-bold text-[#0b2d63]">demo@pramaan.ai</dd></div>
+                <div className="flex justify-between rounded-xl bg-amber-50 px-4 py-3"><dt className="font-semibold text-[#52647b]">Password</dt><dd className="font-mono font-bold text-[#0b2d63]">pramaan2026</dd></div>
+              </dl>
+              <div className="mt-6 grid gap-2">
+                <button type="button" onClick={() => { setActiveRole('scrutiny-officer'); setHasEnteredPortal(true) }} className="rounded-xl bg-amber-400 px-4 py-3 text-sm font-bold text-[#17335f] shadow-sm hover:bg-amber-300">Open scrutiny officer</button>
+                <button type="button" onClick={() => { setActiveRole('policy-admin'); setHasEnteredPortal(true) }} className="rounded-xl bg-orange-500 px-4 py-3 text-sm font-bold text-white hover:bg-orange-600">Open policy admin</button>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Main Content Container */}
-      <main className="relative z-10 max-w-[1600px] mx-auto px-4 lg:px-8 py-6">
+      <main className={`${hasEnteredPortal ? '' : 'hidden '}relative z-10 max-w-[1600px] mx-auto px-4 lg:px-8 py-6`}>
         {/* VIEW 1: SCRUTINY OFFICER WORKSTATION */}
         {activeRole === 'scrutiny-officer' && (
           <div className="space-y-6">
             {/* Scrutiny Officer Sub-Navigation Bar (Sub-Tab 1A, 1B, 1C) */}
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 p-2 rounded-2xl bg-slate-900/70 backdrop-blur-2xl border border-white/10 border-t-white/20">
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 p-2 rounded-2xl bg-white/90 backdrop-blur-2xl border border-[#d6e2f0] shadow-sm">
               <div
                 role="tablist"
                 aria-label="Scrutiny Officer Sub-Tabs"
@@ -264,16 +313,16 @@ export default function AictePramaanAiPage() {
                       onClick={() => setActiveSubTab(tab.id)}
                       className={`relative flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-mono transition-all ${
                         isActive
-                          ? 'bg-gradient-to-r from-cyan-500/25 via-cyan-500/15 to-emerald-500/20 text-white border border-cyan-400/60 shadow-[0_0_20px_rgba(6,182,212,0.3)] font-bold'
-                          : 'text-slate-400 hover:text-white hover:bg-white/5 border border-transparent'
+                          ? 'bg-gradient-to-r from-amber-100 via-orange-50 to-emerald-50 text-[#17335f] border border-amber-300 shadow-sm font-bold'
+                          : 'text-[#5d6f86] hover:text-[#17335f] hover:bg-[#f4f8fd] border border-transparent'
                       }`}
                     >
-                      <span className="text-cyan-400">{tab.icon}</span>
+                      <span className="text-orange-400">{tab.icon}</span>
                       <span>{tab.label}</span>
                       <span
                         className={`px-2 py-0.5 rounded-full text-[10px] ${
                           isActive
-                            ? 'bg-cyan-400 text-slate-950 font-extrabold'
+                            ? 'bg-orange-400 text-slate-950 font-extrabold'
                             : 'bg-slate-950 text-slate-400'
                         }`}
                       >

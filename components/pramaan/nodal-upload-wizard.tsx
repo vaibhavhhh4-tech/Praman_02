@@ -41,7 +41,7 @@ export function NodalUploadWizard({
   return (
     <div className="space-y-6">
       {/* Header Banner */}
-      <div className="rounded-3xl bg-slate-900/60 backdrop-blur-2xl border border-white/10 border-t-white/25 p-6 lg:p-8 shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
+      <div className="rounded-3xl bg-white backdrop-blur-2xl border border-slate-200 border-t-white/25 p-6 lg:p-8 shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-400/30 text-amber-300 text-xs font-mono mb-2">
@@ -62,7 +62,7 @@ export function NodalUploadWizard({
               className={`px-3.5 py-2 rounded-xl font-mono text-xs border transition-all ${
                 selectedPreset === 'apex'
                   ? 'bg-rose-500/20 text-rose-200 border-rose-400/60'
-                  : 'bg-slate-950/70 text-slate-400 border-white/10'
+                  : 'bg-slate-50 text-slate-400 border-slate-200'
               }`}
             >
               Demo 1: Apex Lucknow (2 Critical Flags)
@@ -72,7 +72,7 @@ export function NodalUploadWizard({
               className={`px-3.5 py-2 rounded-xl font-mono text-xs border transition-all ${
                 selectedPreset === 'sahyadri'
                   ? 'bg-emerald-500/20 text-emerald-200 border-emerald-400/60'
-                  : 'bg-slate-950/70 text-slate-400 border-white/10'
+                  : 'bg-slate-50 text-slate-400 border-slate-200'
               }`}
             >
               Demo 2: Sahyadri Pune (Zero-Defect)
@@ -84,8 +84,8 @@ export function NodalUploadWizard({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-6">
           {/* Left 5 Cols: Upload Bundle */}
           <div className="lg:col-span-5 space-y-4">
-            <div className="rounded-2xl p-5 bg-slate-950/80 border border-dashed border-cyan-400/40 text-center space-y-3">
-              <div className="w-12 h-12 rounded-2xl bg-cyan-500/15 border border-cyan-400/30 flex items-center justify-center mx-auto text-cyan-300">
+            <div className="rounded-2xl p-5 bg-slate-950/80 border border-dashed border-orange-400/40 text-center space-y-3">
+              <div className="w-12 h-12 rounded-2xl bg-orange-500/15 border border-orange-400/30 flex items-center justify-center mx-auto text-orange-300">
                 <UploadCloud className="w-6 h-6" />
               </div>
               <div>
@@ -100,30 +100,30 @@ export function NodalUploadWizard({
               </div>
 
               <div className="space-y-2 text-left pt-2">
-                <div className="p-3 rounded-xl bg-slate-900/90 border border-white/10 flex items-center justify-between text-xs font-mono">
+                <div className="p-3 rounded-xl bg-slate-900/90 border border-slate-200 flex items-center justify-between text-xs font-mono">
                   <span className="text-slate-200">
                     1. Fire_Safety_NOC_2026.pdf
                   </span>
-                  <span className="text-cyan-300">2.4 MB • 300 DPI</span>
+                  <span className="text-orange-300">2.4 MB • 300 DPI</span>
                 </div>
-                <div className="p-3 rounded-xl bg-slate-900/90 border border-white/10 flex items-center justify-between text-xs font-mono">
+                <div className="p-3 rounded-xl bg-slate-900/90 border border-slate-200 flex items-center justify-between text-xs font-mono">
                   <span className="text-slate-200">
                     2. Architect_Land_Cert.pdf
                   </span>
-                  <span className="text-cyan-300">4.1 MB • Signed</span>
+                  <span className="text-orange-300">4.1 MB • Signed</span>
                 </div>
-                <div className="p-3 rounded-xl bg-slate-900/90 border border-white/10 flex items-center justify-between text-xs font-mono">
+                <div className="p-3 rounded-xl bg-slate-900/90 border border-slate-200 flex items-center justify-between text-xs font-mono">
                   <span className="text-slate-200">
                     3. Geotagged_Lab_Frames.zip
                   </span>
-                  <span className="text-cyan-300">18 EXIF Photos</span>
+                  <span className="text-orange-300">18 EXIF Photos</span>
                 </div>
               </div>
 
               <button
                 onClick={handleRunPreCheck}
                 disabled={isRunningPreCheck}
-                className="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-cyan-400 to-emerald-400 text-slate-950 font-mono text-xs font-bold shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:brightness-110 transition-all flex items-center justify-center gap-2"
+                className="w-full py-2.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-slate-950 font-mono text-xs font-bold shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:brightness-110 transition-all flex items-center justify-center gap-2"
               >
                 {isRunningPreCheck ? (
                   <>
@@ -142,10 +142,10 @@ export function NodalUploadWizard({
 
           {/* Right 7 Cols: Instant Pre-Submission Feedback Report */}
           <div className="lg:col-span-7">
-            <div className="rounded-2xl p-5 bg-slate-950/85 border border-white/10 space-y-4 h-full flex flex-col justify-between">
+            <div className="rounded-2xl p-5 bg-slate-950/85 border border-slate-200 space-y-4 h-full flex flex-col justify-between">
               <div>
-                <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-white/10">
-                  <span className="text-xs font-mono uppercase text-cyan-300 font-bold">
+                <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-slate-200">
+                  <span className="text-xs font-mono uppercase text-orange-300 font-bold">
                     PRE-SUBMISSION AI READINESS REPORT
                   </span>
                   {selectedPreset === 'apex' ? (
@@ -217,13 +217,13 @@ export function NodalUploadWizard({
                 )}
               </div>
 
-              <div className="pt-4 border-t border-white/10 flex items-center justify-between">
+              <div className="pt-4 border-t border-slate-200 flex items-center justify-between">
                 <span className="text-[11px] font-mono text-slate-400">
                   Zero-penalty sandbox: Not yet committed to AICTE ledger
                 </span>
                 <button
                   onClick={onInspectInWorkstation}
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-cyan-500/20 hover:bg-cyan-400 text-cyan-200 hover:text-slate-950 border border-cyan-400/50 font-mono text-xs font-bold transition-all"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-orange-500/20 hover:bg-orange-400 text-orange-200 hover:text-slate-950 border border-orange-400/50 font-mono text-xs font-bold transition-all"
                 >
                   <span>Open in Split-Screen Evidence Workstation</span>
                   <ArrowRight className="w-3.5 h-3.5" />

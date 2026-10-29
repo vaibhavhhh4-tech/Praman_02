@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   APH_CLAUSES_DATABASE,
@@ -26,6 +26,15 @@ interface AphSearchModalProps {
 export function AphSearchModal({ isOpen, onClose }: AphSearchModalProps) {
   const [query, setQuery] = useState('')
 
+  useEffect(() => {
+    if (!isOpen) return
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') onClose()
+    }
+    window.addEventListener('keydown', handleEscape)
+    return () => window.removeEventListener('keydown', handleEscape)
+  }, [isOpen, onClose])
+
   const filtered = APH_CLAUSES_DATABASE.filter(
     (c) =>
       c.clauseId.toLowerCase().includes(query.toLowerCase()) ||
@@ -45,7 +54,7 @@ export function AphSearchModal({ isOpen, onClose }: AphSearchModalProps) {
             className="w-full max-w-3xl rounded-3xl bg-slate-900/95 border border-white/15 border-t-white/30 shadow-[0_16px_60px_rgba(0,0,0,0.85)] overflow-hidden"
           >
             <div className="p-4 border-b border-white/10 flex items-center gap-3 bg-slate-950/80">
-              <Search className="w-5 h-5 text-cyan-400 shrink-0" />
+              <Search className="w-5 h-5 text-orange-400 shrink-0" />
               <input
                 type="text"
                 autoFocus
@@ -66,10 +75,10 @@ export function AphSearchModal({ isOpen, onClose }: AphSearchModalProps) {
               {filtered.map((item) => (
                 <div
                   key={item.clauseId}
-                  className="p-4 rounded-2xl bg-slate-950/80 border border-white/10 hover:border-cyan-400/40 transition-all space-y-1.5"
+                  className="p-4 rounded-2xl bg-slate-950/80 border border-white/10 hover:border-orange-400/40 transition-all space-y-1.5"
                 >
                   <div className="flex flex-wrap items-center justify-between gap-2">
-                    <span className="px-2.5 py-0.5 rounded bg-cyan-500/15 border border-cyan-400/30 font-mono text-xs font-bold text-cyan-300">
+                    <span className="px-2.5 py-0.5 rounded bg-orange-500/15 border border-orange-400/30 font-mono text-xs font-bold text-orange-300">
                       {item.clauseId}
                     </span>
                     <span className="text-[11px] font-mono text-amber-300">
@@ -161,11 +170,11 @@ export function ImmutableSignOffModal({
         >
           <div className="p-5 border-b border-white/10 flex items-center justify-between bg-slate-950/80">
             <div className="flex items-center gap-2.5">
-              <div className="p-2 rounded-xl bg-cyan-500/15 border border-cyan-400/30 text-cyan-300">
+              <div className="p-2 rounded-xl bg-orange-500/15 border border-orange-400/30 text-orange-300">
                 <KeyRound className="w-5 h-5" />
               </div>
               <div>
-                <div className="text-[10px] font-mono uppercase text-cyan-300">
+                <div className="text-[10px] font-mono uppercase text-orange-300">
                   IMMUTABLE AUDIT TRAIL • CLASS-III DSC HARDWARE TOKEN
                 </div>
                 <h3 className="text-sm sm:text-base font-bold text-white">
@@ -187,7 +196,7 @@ export function ImmutableSignOffModal({
                 Target Institution:{' '}
                 <strong className="text-white">{application.name}</strong>
               </div>
-              <div className="text-cyan-300">
+              <div className="text-orange-300">
                 Permanent ID: {application.pid} • AI Risk Score:{' '}
                 {application.aiRiskScore}/100
               </div>
@@ -200,7 +209,7 @@ export function ImmutableSignOffModal({
               <select
                 value={reasonCode}
                 onChange={(e) => setReasonCode(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-white/15 text-white font-mono focus:outline-none focus:border-cyan-400"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-white/15 text-white font-mono focus:outline-none focus:border-orange-400"
               >
                 <option value="APH-2.4.1-RECTIFICATION-NOTICE">
                   APH-2.4.1 — Survey/Khasra Discrepancy Rectification
@@ -225,7 +234,7 @@ export function ImmutableSignOffModal({
                 rows={3}
                 value={officerNotes}
                 onChange={(e) => setOfficerNotes(e.target.value)}
-                className="w-full p-3 rounded-xl bg-slate-950 border border-white/15 text-white focus:outline-none focus:border-cyan-400"
+                className="w-full p-3 rounded-xl bg-slate-950 border border-white/15 text-white focus:outline-none focus:border-orange-400"
               />
             </div>
 
@@ -264,7 +273,7 @@ export function ImmutableSignOffModal({
               </button>
               <button
                 type="submit"
-                className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-400 to-emerald-400 text-slate-950 font-mono font-bold shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:brightness-110 flex items-center gap-2"
+                className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-orange-400 to-emerald-400 text-slate-950 font-mono font-bold shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:brightness-110 flex items-center gap-2"
               >
                 <Lock className="w-4 h-4" />
                 <span>Sign with DSC &amp; Commit to Audit Ledger</span>
