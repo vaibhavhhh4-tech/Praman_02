@@ -283,7 +283,7 @@ export default function AictePramaanAiPage() {
                 <div className="flex justify-between rounded-xl bg-amber-50 px-4 py-3"><dt className="font-semibold text-[#52647b]">Password</dt><dd className="font-mono font-bold text-[#0b2d63]">pramaan2026</dd></div>
               </dl>
               <div className="mt-6 grid gap-2">
-                <button type="button" onClick={() => { setActiveRole('scrutiny-officer'); setHasEnteredPortal(true) }} className="rounded-xl bg-[#0b2d63] px-4 py-3 text-sm font-bold text-white hover:bg-[#174987]">Open scrutiny officer</button>
+                <button type="button" onClick={() => { setActiveRole('scrutiny-officer'); setHasEnteredPortal(true) }} className="rounded-xl bg-amber-400 px-4 py-3 text-sm font-bold text-[#17335f] shadow-sm hover:bg-amber-300">Open scrutiny officer</button>
                 <button type="button" onClick={() => { setActiveRole('policy-admin'); setHasEnteredPortal(true) }} className="rounded-xl bg-orange-500 px-4 py-3 text-sm font-bold text-white hover:bg-orange-600">Open policy admin</button>
               </div>
             </div>

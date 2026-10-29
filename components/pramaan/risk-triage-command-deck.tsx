@@ -90,7 +90,7 @@ function TiltBentoCard({
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       whileHover={{ scale: 1.02 }}
-      className={`relative rounded-2xl p-5 bg-slate-900/60 backdrop-blur-2xl border border-t-white/25 transition-colors cursor-default ${borderGlow}`}
+      className={`relative rounded-2xl p-5 bg-white backdrop-blur-2xl border border-t-white/25 transition-colors cursor-default ${borderGlow}`}
     >
       {pulseCrimson && (
         <motion.div
@@ -106,7 +106,7 @@ function TiltBentoCard({
         style={{ transform: 'translateZ(24px)' }}
         className="flex items-start justify-between gap-3"
       >
-        <div className="p-2.5 rounded-xl bg-slate-950/80 border border-white/10">
+        <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200">
           {icon}
         </div>
         <span
@@ -118,7 +118,7 @@ function TiltBentoCard({
 
       <div style={{ transform: 'translateZ(32px)' }} className="mt-4">
         <p className="text-xs font-medium text-slate-400">{title}</p>
-        <p className="text-2xl sm:text-3xl font-bold font-mono tracking-tight text-white mt-1">
+        <p className="text-2xl sm:text-3xl font-bold font-mono tracking-tight text-slate-800 mt-1">
           {value}
         </p>
         <p className="text-xs text-slate-300 mt-1.5 flex items-center gap-1.5">
@@ -166,7 +166,7 @@ export function RiskTriageCommandDeck({
         initial={{ opacity: 0, y: 14 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
-        className="relative overflow-hidden rounded-3xl bg-slate-900/55 backdrop-blur-2xl border border-white/10 border-t-white/25 p-6 lg:p-8 shadow-[0_8px_32px_rgba(0,0,0,0.55)]"
+        className="relative overflow-hidden rounded-3xl bg-white backdrop-blur-2xl border border-slate-200 border-t-white/25 p-6 lg:p-8 shadow-[0_8px_32px_rgba(0,0,0,0.55)]"
       >
         <div className="pointer-events-none absolute -top-24 -right-24 w-96 h-96 rounded-full bg-orange-500/10 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-24 -left-24 w-96 h-96 rounded-full bg-amber-500/10 blur-3xl" />
@@ -177,7 +177,7 @@ export function RiskTriageCommandDeck({
               <Sparkles className="w-3.5 h-3.5" />
               NATIONAL EOA 2026–27 AUTONOMOUS RISK TRIAGE COMMAND DECK
             </div>
-            <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-800 tracking-tight">
               Multi-Modal Document Forensics &amp; Cross-Entity Verification Queue
             </h2>
             <p className="text-xs sm:text-sm text-slate-300 mt-1 max-w-3xl">
@@ -189,7 +189,7 @@ export function RiskTriageCommandDeck({
             </p>
           </div>
 
-          <div className="flex items-center gap-3 self-start lg:self-center px-4 py-2.5 rounded-2xl bg-slate-950/80 border border-white/10 font-mono text-xs">
+          <div className="flex items-center gap-3 self-start lg:self-center px-4 py-2.5 rounded-2xl bg-slate-50 border border-slate-200 font-mono text-xs">
             <div>
               <div className="text-[10px] text-slate-400 uppercase">
                 Active Rule Pack
@@ -256,11 +256,11 @@ export function RiskTriageCommandDeck({
         initial={{ opacity: 0, y: 18 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.45, delay: 0.1 }}
-        className="rounded-3xl bg-slate-900/55 backdrop-blur-2xl border border-white/10 border-t-white/25 p-5 lg:p-6 shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
+        className="rounded-3xl bg-white backdrop-blur-2xl border border-slate-200 border-t-white/25 p-5 lg:p-6 shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
       >
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-5 border-b border-white/10">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-5 border-b border-slate-200">
           <div>
-            <h3 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+            <h3 className="text-base sm:text-lg font-bold text-slate-800 flex items-center gap-2">
               <ShieldAlert className="w-5 h-5 text-orange-400" />
               Statutory Application Triage Queue (6-State Verification Taxonomy)
             </h3>
@@ -277,7 +277,7 @@ export function RiskTriageCommandDeck({
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Filter by PID, College, City..."
-              className="w-full pl-9 pr-4 py-2 rounded-xl bg-slate-950/90 border border-white/15 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-orange-400"
+              className="w-full pl-9 pr-4 py-2 rounded-xl bg-slate-950/90 border border-white/15 text-xs text-slate-800 placeholder:text-slate-500 focus:outline-none focus:border-orange-400"
             />
           </div>
         </div>
@@ -294,7 +294,7 @@ export function RiskTriageCommandDeck({
             className={`px-3 py-1.5 rounded-full text-xs font-mono transition-all border ${
               selectedStateFilter === 'ALL'
                 ? 'bg-orange-500/20 text-orange-200 border-orange-400 shadow-[0_0_15px_rgba(6,182,212,0.3)]'
-                : 'bg-slate-950/60 text-slate-400 border-white/10 hover:text-white'
+                : 'bg-slate-950/60 text-slate-400 border-slate-200 hover:text-slate-800'
             }`}
           >
             All Applications ({applications.length})
@@ -314,7 +314,7 @@ export function RiskTriageCommandDeck({
                 className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-mono transition-all border ${
                   active
                     ? `${st.bgClass} ${st.colorClass} ${st.borderClass} scale-105`
-                    : 'bg-slate-950/60 text-slate-300 border-white/10 hover:border-white/25'
+                    : 'bg-slate-950/60 text-slate-300 border-slate-200 hover:border-white/25'
                 }`}
               >
                 <span className={`h-2 w-2 rounded-full ${st.dotClass}`} />
@@ -331,7 +331,7 @@ export function RiskTriageCommandDeck({
         <div className="overflow-x-auto mt-2">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b border-white/10 text-[11px] font-mono uppercase text-slate-400 bg-slate-950/40">
+              <tr className="border-b border-slate-200 text-[11px] font-mono uppercase text-slate-400 bg-slate-950/40">
                 <th className="py-3 px-4">Permanent ID (PID)</th>
                 <th className="py-3 px-4">Technical Institution &amp; Location</th>
                 <th className="py-3 px-4">Applied Category &amp; Program</th>
@@ -385,7 +385,7 @@ export function RiskTriageCommandDeck({
                     </td>
 
                     <td className="py-4 px-4">
-                      <div className="font-semibold text-white group-hover:text-orange-100">
+                      <div className="font-semibold text-slate-800 group-hover:text-orange-100">
                         {app.name}
                       </div>
                       <div className="text-[11px] text-slate-400 flex items-center gap-1 mt-0.5">

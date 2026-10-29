@@ -59,7 +59,7 @@ export function TopGlassHeader({
   return (
     <header className="sticky top-0 z-40 w-full bg-white/95 backdrop-blur-2xl border-b border-[#d6e2f0] shadow-[0_8px_24px_rgba(23,51,95,0.12)]">
       {/* Top Telemetry Ribbon */}
-      <div className="border-b border-slate-800 bg-[#171717] px-4 lg:px-8 py-1.5 flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono">
+      <div className="border-b border-slate-800 bg-white px-4 lg:px-8 py-1.5 flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono">
         <div className="flex flex-wrap items-center gap-3 text-slate-300">
           <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-ping" />
@@ -169,7 +169,7 @@ export function TopGlassHeader({
         <div className="flex items-center gap-2.5 w-full xl:w-auto justify-end">
           <button
             onClick={onOpenCmdK}
-            className="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-slate-900/80 hover:bg-slate-800/90 border border-white/15 border-t-white/25 text-xs text-slate-300 hover:text-orange-200 transition-all shadow-sm"
+            className="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-white hover:bg-slate-800/90 border border-white/15 border-t-white/25 text-xs text-slate-300 hover:text-orange-200 transition-all shadow-sm"
             title="Search AICTE Approval Process Handbook 2024-27 Clauses"
           >
             <Search className="w-3.5 h-3.5 text-orange-400" />
@@ -182,7 +182,7 @@ export function TopGlassHeader({
           <button
             onClick={onSimulateLiveSubmission}
             disabled={isSimulating}
-            className="relative group overflow-hidden flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold text-slate-950 bg-gradient-to-r from-amber-400 via-amber-300 to-orange-300 hover:brightness-110 transition-all shadow-[0_0_24px_rgba(245,158,11,0.35)] disabled:opacity-60"
+            className="relative group overflow-hidden flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold text-slate-950 bg-blue-600 hover:brightness-110 transition-all shadow-[0_0_24px_rgba(245,158,11,0.35)] disabled:opacity-60"
           >
             <Sparkles
               className={`w-4 h-4 text-slate-950 ${
