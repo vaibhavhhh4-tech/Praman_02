@@ -76,6 +76,7 @@ export default function AictePramaanAiPage() {
   const [applications, setApplications] =
     useState<InstitutionApplication[]>(INITIAL_APPLICATIONS)
   const [activeRole, setActiveRole] = useState<RoleView>('scrutiny-officer')
+  const [hasEnteredPortal, setHasEnteredPortal] = useState(false)
   const [activeSubTab, setActiveSubTab] =
     useState<ScrutinySubTab>('triage-deck')
   const [selectedAppId, setSelectedAppId] =
@@ -216,14 +217,16 @@ export default function AictePramaanAiPage() {
         />
       </div>
 
-      {/* Global Top Glass Navigation Header */}
-      <TopGlassHeader
-        activeRole={activeRole}
-        onSelectRole={setActiveRole}
-        onOpenCmdK={() => setIsCmdKOpen(true)}
-        onSimulateLiveSubmission={handleSimulateLiveSubmission}
-        isSimulating={isSimulating}
-      />
+      {/* Workspace navigation appears after entering the portal. */}
+      {hasEnteredPortal && (
+        <TopGlassHeader
+          activeRole={activeRole}
+          onSelectRole={setActiveRole}
+          onOpenCmdK={() => setIsCmdKOpen(true)}
+          onSimulateLiveSubmission={handleSimulateLiveSubmission}
+          isSimulating={isSimulating}
+        />
+      )}
 
       {/* Toast Notification Banner */}
       <AnimatePresence>
@@ -242,8 +245,54 @@ export default function AictePramaanAiPage() {
         )}
       </AnimatePresence>
 
+      {!hasEnteredPortal && (
+        <section className="relative z-10 max-w-6xl mx-auto px-4 lg:px-8 py-12 lg:py-20">
+          <div className="grid lg:grid-cols-[1.15fr_0.85fr] gap-8 items-center">
+            <div className="space-y-6">
+              <span className="inline-flex rounded-full bg-amber-100 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-[#8a5a00] border border-amber-300">
+                Government approval workspace
+              </span>
+              <h1 className="text-4xl lg:text-6xl font-black tracking-tight text-[#0b2d63]">
+                Welcome to <span className="text-orange-500">PRAMAAN-AI</span>
+              </h1>
+              <p className="max-w-2xl text-lg leading-8 text-[#52647b]">
+                A friendly, transparent workspace for application scrutiny, evidence review, and policy administration.
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <button
+                  type="button"
+                  onClick={() => setHasEnteredPortal(true)}
+                  className="rounded-full bg-amber-400 px-6 py-3 font-bold text-[#17335f] shadow-md hover:bg-amber-300"
+                >
+                  Enter portal
+                </button>
+                <button
+                  type="button"
+                  onClick={() => { setActiveRole('nodal-officer'); setHasEnteredPortal(true) }}
+                  className="rounded-full border-2 border-[#0b2d63] bg-white px-6 py-3 font-bold text-[#0b2d63] hover:bg-blue-50"
+                >
+                  Nodal officer login
+                </button>
+              </div>
+            </div>
+            <div className="rounded-3xl border border-amber-300 bg-white/95 p-6 shadow-xl">
+              <h2 className="text-xl font-extrabold text-[#0b2d63]">Demo login credentials</h2>
+              <p className="mt-2 text-sm text-[#52647b]">Use these mock credentials to explore each workspace.</p>
+              <dl className="mt-5 space-y-3 text-sm">
+                <div className="flex justify-between rounded-xl bg-blue-50 px-4 py-3"><dt className="font-semibold text-[#52647b]">User ID</dt><dd className="font-mono font-bold text-[#0b2d63]">demo@pramaan.ai</dd></div>
+                <div className="flex justify-between rounded-xl bg-amber-50 px-4 py-3"><dt className="font-semibold text-[#52647b]">Password</dt><dd className="font-mono font-bold text-[#0b2d63]">pramaan2026</dd></div>
+              </dl>
+              <div className="mt-6 grid gap-2">
+                <button type="button" onClick={() => { setActiveRole('scrutiny-officer'); setHasEnteredPortal(true) }} className="rounded-xl bg-[#0b2d63] px-4 py-3 text-sm font-bold text-white hover:bg-[#174987]">Open scrutiny officer</button>
+                <button type="button" onClick={() => { setActiveRole('policy-admin'); setHasEnteredPortal(true) }} className="rounded-xl bg-orange-500 px-4 py-3 text-sm font-bold text-white hover:bg-orange-600">Open policy admin</button>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Main Content Container */}
-      <main className="relative z-10 max-w-[1600px] mx-auto px-4 lg:px-8 py-6">
+      <main className={`${hasEnteredPortal ? '' : 'hidden '}relative z-10 max-w-[1600px] mx-auto px-4 lg:px-8 py-6`}>
         {/* VIEW 1: SCRUTINY OFFICER WORKSTATION */}
         {activeRole === 'scrutiny-officer' && (
           <div className="space-y-6">
