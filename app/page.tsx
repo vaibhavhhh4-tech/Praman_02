@@ -179,7 +179,7 @@ export default function AictePramaanAiPage() {
   ]
 
   return (
-    <div className="min-h-screen relative bg-[#050811] text-slate-100 cyber-grid-bg">
+    <div className="min-h-screen relative bg-[#f4f8fd] text-[#17335f] cyber-grid-bg">
       {/* Animated Sovereign Cyber-Glass Aurora Mesh Background Orbs */}
       <div className="pointer-events-none fixed inset-0 overflow-hidden z-0">
         <motion.div
@@ -248,7 +248,7 @@ export default function AictePramaanAiPage() {
         {activeRole === 'scrutiny-officer' && (
           <div className="space-y-6">
             {/* Scrutiny Officer Sub-Navigation Bar (Sub-Tab 1A, 1B, 1C) */}
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 p-2 rounded-2xl bg-slate-900/70 backdrop-blur-2xl border border-white/10 border-t-white/20">
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 p-2 rounded-2xl bg-white/90 backdrop-blur-2xl border border-[#d6e2f0] shadow-sm">
               <div
                 role="tablist"
                 aria-label="Scrutiny Officer Sub-Tabs"
@@ -264,8 +264,8 @@ export default function AictePramaanAiPage() {
                       onClick={() => setActiveSubTab(tab.id)}
                       className={`relative flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-mono transition-all ${
                         isActive
-                          ? 'bg-gradient-to-r from-orange-500/25 via-orange-500/15 to-emerald-500/20 text-white border border-orange-400/60 shadow-[0_0_20px_rgba(6,182,212,0.3)] font-bold'
-                          : 'text-slate-400 hover:text-white hover:bg-white/5 border border-transparent'
+                          ? 'bg-gradient-to-r from-amber-100 via-orange-50 to-emerald-50 text-[#17335f] border border-amber-300 shadow-sm font-bold'
+                          : 'text-[#5d6f86] hover:text-[#17335f] hover:bg-[#f4f8fd] border border-transparent'
                       }`}
                     >
                       <span className="text-orange-400">{tab.icon}</span>

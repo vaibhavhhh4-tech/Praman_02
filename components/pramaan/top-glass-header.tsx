@@ -57,9 +57,9 @@ export function TopGlassHeader({
   ]
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-slate-950/75 backdrop-blur-2xl border-b border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.65)]">
+    <header className="sticky top-0 z-40 w-full bg-white/95 backdrop-blur-2xl border-b border-[#d6e2f0] shadow-[0_8px_24px_rgba(23,51,95,0.12)]">
       {/* Top Telemetry Ribbon */}
-      <div className="border-b border-white/5 bg-[#050811]/90 px-4 lg:px-8 py-1.5 flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono">
+      <div className="border-b border-slate-800 bg-[#171717] px-4 lg:px-8 py-1.5 flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono">
         <div className="flex flex-wrap items-center gap-3 text-slate-300">
           <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-ping" />
@@ -124,7 +124,7 @@ export function TopGlassHeader({
         <div
           role="tablist"
           aria-label="Workspace Role Switcher"
-          className="flex flex-wrap items-center gap-1 p-1 rounded-xl bg-slate-900/90 border border-white/10 shadow-inner w-full xl:w-auto"
+          className="flex flex-wrap items-center gap-1 p-1 rounded-xl bg-[#edf4ff] border border-[#cbdcf3] shadow-inner w-full xl:w-auto"
         >
           {roles.map((role) => {
             const isActive = activeRole === role.id
@@ -136,15 +136,15 @@ export function TopGlassHeader({
                 onClick={() => onSelectRole(role.id)}
                 className={`relative flex items-center gap-2.5 px-3.5 py-2 rounded-lg text-left transition-all flex-1 xl:flex-initial ${
                   isActive
-                    ? 'text-slate-950 font-semibold'
-                    : 'text-slate-300 hover:text-white hover:bg-white/5'
+                    ? 'text-[#17335f] font-semibold'
+                    : 'text-[#5d6f86] hover:text-[#17335f] hover:bg-white'
                 }`}
               >
                 {isActive && (
                   <motion.div
                     layoutId="activeRolePill"
                     transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                    className="absolute inset-0 rounded-lg bg-gradient-to-r from-orange-400 via-orange-300 to-emerald-300 shadow-[0_0_20px_rgba(6,182,212,0.5)]"
+                    className="absolute inset-0 rounded-lg bg-gradient-to-r from-amber-300 via-orange-200 to-emerald-200 shadow-[0_0_20px_rgba(245,158,11,0.25)]"
                   />
                 )}
                 <span className="relative z-10 flex items-center gap-2">

@@ -39,8 +39,8 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  colorScheme: 'dark',
-  themeColor: '#050811',
+  colorScheme: 'light',
+  themeColor: '#0b2f6b',
 }
 
 export default function RootLayout({
@@ -49,8 +49,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`dark ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}>
-      <body className="font-sans antialiased bg-[#050811] text-slate-100 selection:bg-orange-500/30 selection:text-orange-200 overflow-x-hidden">
+    <html lang="en" className={`${spaceGrotesk.variable} ${jetbrainsMono.variable}`}>
+      <body className="font-sans antialiased bg-slate-50 text-slate-900 selection:bg-amber-200 selection:text-blue-950 overflow-x-hidden">
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
