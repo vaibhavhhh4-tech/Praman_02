@@ -18,6 +18,7 @@ import {
   Filter,
   ShieldAlert,
   MapPin,
+  Calendar,
 } from 'lucide-react'
 
 interface TiltBentoCardProps {
@@ -88,18 +89,18 @@ function TiltBentoCard({
           {icon}
         </div>
         <span
-          className={`px-2.5 py-0.5 rounded-full text-xs font-medium border ${badgeStyle}`}
+          className={`px-2.5 py-0.5 rounded-full text-xs font-semibold border ${badgeStyle}`}
         >
           {badgeText}
         </span>
       </div>
 
       <div style={{ transform: 'translateZ(20px)' }} className="mt-4">
-        <p className="text-xs font-medium text-[#64748B]">{title}</p>
-        <p className="text-2xl sm:text-3xl font-bold tracking-tight text-[#1E293B] mt-1 font-mono">
+        <p className="text-xs font-semibold uppercase tracking-wider text-[#64748B]">{title}</p>
+        <p className="text-3xl font-extrabold tracking-tight text-[#1E293B] mt-1 tabular-nums font-sans">
           {value}
         </p>
-        <p className="text-xs text-[#64748B] mt-1.5 flex items-center gap-1.5">
+        <p className="text-xs text-[#64748B] mt-1.5 flex items-center gap-1.5 font-normal">
           <span>{subtext}</span>
         </p>
       </div>
@@ -140,32 +141,32 @@ export function RiskTriageCommandDeck({
       <div className="rounded-2xl bg-white border border-[#E2E8F0] p-6 shadow-xs">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
           <div>
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-50 border border-blue-200 text-[#2563EB] text-xs font-semibold mb-2">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-[#2563EB] text-xs font-bold tracking-wide uppercase mb-2">
               NATIONAL EOA 2026–27 RISK TRIAGE QUEUE
             </div>
-            <h2 className="text-xl sm:text-2xl font-bold text-[#1E293B] tracking-tight">
+            <h2 className="text-xl sm:text-2xl font-extrabold text-[#1E293B] tracking-tight">
               Multi-Modal Document Forensics &amp; Verification Queue
             </h2>
-            <p className="text-xs sm:text-sm text-[#64748B] mt-1 max-w-3xl">
-              Real-time discrepancy detection and document cross-entity reconciliation. Select an institution from the queue below to review evidence, bounding-box annotations, and forensic details.
+            <p className="text-xs sm:text-sm text-[#64748B] mt-1 max-w-3xl leading-relaxed font-normal">
+              Continuous cross-entity reconciliation and AI document integrity monitoring. Click any application below to launch the Evidence &amp; Bounding-Box Workstation with localized Error Level Analysis (ELA).
             </p>
           </div>
 
           <div className="flex items-center gap-3 self-start lg:self-center px-4 py-2 rounded-xl bg-[#F8FAFC] border border-[#E2E8F0] text-xs">
             <div>
-              <div className="text-[10px] text-[#64748B] uppercase font-medium">
+              <div className="text-[10px] text-[#64748B] uppercase font-bold tracking-wider">
                 Active Rule Pack
               </div>
-              <div className="text-[#1E293B] font-semibold font-mono">
+              <div className="text-[#1E293B] font-bold text-xs tracking-tight">
                 APH_2024_27_DROOLS_v4.2
               </div>
             </div>
             <div className="h-6 w-px bg-[#E2E8F0]" />
             <div>
-              <div className="text-[10px] text-[#64748B] uppercase font-medium">
+              <div className="text-[10px] text-[#64748B] uppercase font-bold tracking-wider">
                 Forensic Threshold
               </div>
-              <div className="text-[#166534] font-semibold font-mono">
+              <div className="text-[#166534] font-bold text-xs tracking-tight">
                 ELA &gt; 0.35 Flagged
               </div>
             </div>
@@ -178,34 +179,34 @@ export function RiskTriageCommandDeck({
           className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4"
         >
           <TiltBentoCard
-            title="Total Applications (2026-27)"
+            title="Total Applications"
             value="8,420"
-            subtext="+14% verified via zero-discrepancy parity"
-            badgeText="8,420 Total"
+            subtext="+14% fast-tracked via automated zero-discrepancy parity"
+            badgeText="Cycle 2026-27"
             accentColor="blue"
             icon={<FileStack className="w-5 h-5 text-[#2563EB]" />}
           />
           <TiltBentoCard
-            title="Discrepancies Found"
+            title="Discrepancies Flagged"
             value="312"
-            subtext="Requires Officer Review (Plot/Area/Intake)"
+            subtext="Requires Officer Review (Plot/Area/Intake discrepancies)"
             badgeText="Pending Review"
             accentColor="amber"
             icon={<AlertTriangle className="w-5 h-5 text-[#92400E]" />}
           />
           <TiltBentoCard
-            title="Suspected Document Tampering"
+            title="Suspected Tampering"
             value="47"
-            subtext="Priority Attention — PDF XRef / ELA Variance"
-            badgeText="Action Required"
+            subtext="Priority Attention — PDF XRef / ELA JPEG Splice detected"
+            badgeText="Critical Alert"
             accentColor="crimson"
             icon={<Flame className="w-5 h-5 text-[#991B1B]" />}
           />
           <TiltBentoCard
-            title="Avg. Scrutiny Time"
+            title="Average Scrutiny Time"
             value="1m 42s"
-            subtext="Down from 4.5 hours manual committee review"
-            badgeText="Automated"
+            subtext="Reduced from 4.5 hours manual committee scrutiny"
+            badgeText="99.3% Faster"
             accentColor="emerald"
             icon={<Timer className="w-5 h-5 text-[#166534]" />}
           />
@@ -216,12 +217,12 @@ export function RiskTriageCommandDeck({
       <div className="rounded-2xl bg-white border border-[#E2E8F0] p-5 lg:p-6 shadow-xs">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-5 border-b border-[#E2E8F0]">
           <div>
-            <h3 className="text-base sm:text-lg font-bold text-[#1E293B] flex items-center gap-2">
+            <h3 className="text-base sm:text-lg font-extrabold text-[#1E293B] flex items-center gap-2 tracking-tight">
               <ShieldAlert className="w-5 h-5 text-[#2563EB]" />
               Application Review Queue
             </h3>
-            <p className="text-xs text-[#64748B] mt-0.5">
-              Filter by statutory verification status or click any institution to inspect evidence and supporting documents.
+            <p className="text-xs text-[#64748B] mt-0.5 font-normal">
+              Filter by statutory verification status or click any institution to inspect evidence, bounding-box annotations, and supporting documents.
             </p>
           </div>
 
@@ -232,24 +233,24 @@ export function RiskTriageCommandDeck({
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Filter by PID, institution, city..."
-              className="w-full pl-9 pr-4 py-2 rounded-lg bg-white border border-[#E2E8F0] text-xs text-[#1E293B] placeholder:text-[#64748B] focus:outline-none focus:border-[#2563EB] focus:ring-1 focus:ring-[#2563EB]"
+              placeholder="Filter by PID, institution, city, state..."
+              className="w-full pl-9 pr-4 py-2 rounded-lg bg-white border border-[#CBD5E1] text-xs font-normal text-[#1E293B] placeholder:text-[#94A3B8] focus:outline-none focus:border-[#2563EB] focus:ring-1 focus:ring-[#2563EB]"
             />
           </div>
         </div>
 
         {/* Status Filter Pills */}
         <div className="flex flex-wrap items-center gap-2 py-4">
-          <span className="text-xs text-[#64748B] font-medium flex items-center gap-1 mr-1">
+          <span className="text-xs text-[#64748B] font-bold uppercase tracking-wider flex items-center gap-1 mr-1">
             <Filter className="w-3.5 h-3.5 text-[#64748B]" />
             Status:
           </span>
 
           <button
             onClick={() => setSelectedStateFilter('ALL')}
-            className={`px-3 py-1.5 rounded-full text-xs transition-colors border ${
+            className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-colors border ${
               selectedStateFilter === 'ALL'
-                ? 'bg-blue-50 text-[#2563EB] border-blue-200 font-semibold'
+                ? 'bg-blue-50 text-[#2563EB] border-blue-200 shadow-2xs'
                 : 'bg-[#F1F5F9] text-[#64748B] border-[#E2E8F0] hover:text-[#1E293B] hover:bg-white'
             }`}
           >
@@ -267,15 +268,15 @@ export function RiskTriageCommandDeck({
                 onClick={() =>
                   setSelectedStateFilter(active ? 'ALL' : st.state)
                 }
-                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs transition-colors border ${
+                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-colors border ${
                   active
-                    ? `${st.bgClass} ${st.colorClass} ${st.borderClass} font-semibold ring-1 ring-current`
+                    ? `${st.bgClass} ${st.colorClass} ${st.borderClass} shadow-2xs ring-1 ring-current`
                     : 'bg-[#F1F5F9] text-[#64748B] border-[#E2E8F0] hover:bg-white hover:text-[#1E293B]'
                 }`}
               >
                 <span className={`h-2 w-2 rounded-full ${st.dotClass}`} />
                 <span>{st.label}</span>
-                <span className="px-1.5 py-0.2 rounded bg-black/5 text-[10px] font-medium">
+                <span className="px-1.5 py-0.2 rounded bg-black/5 text-[10px] font-bold">
                   {count}
                 </span>
               </button>
@@ -284,16 +285,16 @@ export function RiskTriageCommandDeck({
         </div>
 
         {/* Table Container */}
-        <div className="overflow-x-auto mt-2 rounded-xl border border-[#E2E8F0]">
+        <div className="overflow-x-auto mt-1 rounded-xl border border-[#E2E8F0]">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b border-[#E2E8F0] text-xs font-semibold text-[#64748B] bg-[#F8FAFC]">
+              <tr className="border-b border-[#E2E8F0] text-[11px] font-bold uppercase tracking-wider text-[#64748B] bg-[#F8FAFC]">
                 <th className="py-3 px-4">Permanent ID</th>
                 <th className="py-3 px-4">Technical Institution &amp; Location</th>
                 <th className="py-3 px-4">Category &amp; Program</th>
-                <th className="py-3 px-4">AI Risk Score</th>
-                <th className="py-3 px-4">Verification Status</th>
-                <th className="py-3 px-4">Findings</th>
+                <th className="py-3 px-4">AI Risk Assessment</th>
+                <th className="py-3 px-4">Statutory Status</th>
+                <th className="py-3 px-4">Discrepancies</th>
                 <th className="py-3 px-4 text-right">Action</th>
               </tr>
             </thead>
@@ -301,12 +302,12 @@ export function RiskTriageCommandDeck({
               {filteredApps.length === 0 && (
                 <tr>
                   <td colSpan={7} className="py-12 px-4 text-center">
-                    <div className="text-[#1E293B] font-semibold">No applications match these filters.</div>
-                    <p className="text-xs text-[#64748B] mt-1">Try a different search or choose “All Applications”.</p>
+                    <div className="text-sm font-bold text-[#1E293B]">No applications match these filters.</div>
+                    <p className="text-xs text-[#64748B] mt-1 font-normal">Try a different search term or choose “All Applications”.</p>
                     <button
                       type="button"
                       onClick={() => { setSearchQuery(''); setSelectedStateFilter('ALL') }}
-                      className="mt-3 px-3.5 py-1.5 rounded-lg bg-blue-50 text-[#2563EB] text-xs font-semibold hover:bg-blue-100 transition-colors border border-blue-200"
+                      className="mt-3 px-3.5 py-1.5 rounded-lg bg-blue-50 text-[#2563EB] text-xs font-bold hover:bg-blue-100 transition-colors border border-blue-200"
                     >
                       Clear filters
                     </button>
@@ -325,37 +326,42 @@ export function RiskTriageCommandDeck({
                         : 'hover:bg-[#F8FAFC]'
                     }`}
                   >
-                    <td className="py-3.5 px-4 font-mono whitespace-nowrap">
-                      <div className="font-semibold text-[#2563EB] flex items-center gap-1.5">
+                    {/* Column 1: Permanent ID */}
+                    <td className="py-3.5 px-4 whitespace-nowrap">
+                      <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-blue-50/80 border border-blue-200 text-[#2563EB] text-xs font-bold tracking-tight">
                         {isSelected && (
                           <span className="h-1.5 w-1.5 rounded-full bg-[#2563EB]" />
                         )}
-                        {app.pid}
+                        <span>PID: {app.pid}</span>
                       </div>
-                      <div className="text-[11px] text-[#64748B] mt-0.5 font-sans">
-                        {app.submittedAt}
+                      <div className="text-[11px] text-[#64748B] mt-1 flex items-center gap-1 font-normal">
+                        <Calendar className="w-3 h-3 text-[#94A3B8]" />
+                        <span>{app.submittedAt}</span>
                       </div>
                     </td>
 
+                    {/* Column 2: Technical Institution & Location */}
                     <td className="py-3.5 px-4">
-                      <div className="font-semibold text-[#1E293B]">
+                      <div className="font-bold text-sm text-[#1E293B] tracking-tight group-hover:text-[#2563EB] transition-colors">
                         {app.name}
                       </div>
-                      <div className="text-[11px] text-[#64748B] flex items-center gap-1 mt-0.5">
-                        <MapPin className="w-3 h-3 text-[#94A3B8]" />
-                        {app.city}, {app.state} • {app.region} Region
+                      <div className="text-xs text-[#64748B] flex items-center gap-1 mt-0.5 font-normal">
+                        <MapPin className="w-3 h-3 text-[#94A3B8] shrink-0" />
+                        <span>{app.city}, {app.state} • {app.region} Region</span>
                       </div>
                     </td>
 
+                    {/* Column 3: Category & Program */}
                     <td className="py-3.5 px-4">
-                      <div className="text-[#1E293B] font-medium">
+                      <div className="text-xs font-bold text-[#1E293B]">
                         {app.category}
                       </div>
-                      <div className="text-[11px] text-[#64748B] mt-0.5">
+                      <div className="text-xs text-[#64748B] mt-0.5 font-normal leading-snug">
                         {app.programFocus}
                       </div>
                     </td>
 
+                    {/* Column 4: AI Risk Assessment */}
                     <td className="py-3.5 px-4">
                       <div className="flex items-center gap-2">
                         <div className="w-16 h-2 rounded-full bg-[#E2E8F0] overflow-hidden">
@@ -371,7 +377,7 @@ export function RiskTriageCommandDeck({
                           />
                         </div>
                         <span
-                          className={`font-semibold font-mono ${
+                          className={`font-bold text-xs tabular-nums ${
                             app.aiRiskScore >= 70
                               ? 'text-[#991B1B]'
                               : app.aiRiskScore >= 40
@@ -379,52 +385,55 @@ export function RiskTriageCommandDeck({
                                 : 'text-[#166534]'
                           }`}
                         >
-                          {app.aiRiskScore}
+                          {app.aiRiskScore}/100
                         </span>
                       </div>
-                      <div className="text-[10px] text-[#64748B] mt-0.5 font-mono">
-                        ELA: {app.certificateData.elaMaxVariance.toFixed(2)}
+                      <div className="text-[11px] text-[#64748B] mt-0.5 font-medium">
+                        Peak ELA: {app.certificateData.elaMaxVariance.toFixed(2)}
                       </div>
                     </td>
 
+                    {/* Column 5: Statutory Status */}
                     <td className="py-3.5 px-4 whitespace-nowrap">
                       <StatutoryBadge state={app.status} size="sm" />
                     </td>
 
+                    {/* Column 6: Findings / Deficiencies */}
                     <td className="py-3.5 px-4 whitespace-nowrap">
                       <div className="flex items-center gap-1.5">
                         {app.flagsCount.critical > 0 && (
-                          <span className="px-2 py-0.5 rounded-full bg-[#FEE2E2] border border-[#FECACA] text-[#991B1B] text-[10px] font-semibold">
+                          <span className="px-2 py-0.5 rounded-full bg-[#FEE2E2] border border-[#FECACA] text-[#991B1B] text-[10px] font-bold">
                             {app.flagsCount.critical} Critical
                           </span>
                         )}
                         {app.flagsCount.warning > 0 && (
-                          <span className="px-2 py-0.5 rounded-full bg-[#FEF3C7] border border-[#FDE68A] text-[#92400E] text-[10px] font-medium">
+                          <span className="px-2 py-0.5 rounded-full bg-[#FEF3C7] border border-[#FDE68A] text-[#92400E] text-[10px] font-semibold">
                             {app.flagsCount.warning} Warning
                           </span>
                         )}
                         {app.flagsCount.info > 0 && (
-                          <span className="px-2 py-0.5 rounded-full bg-[#F1F5F9] border border-[#E2E8F0] text-[#64748B] text-[10px] font-medium">
+                          <span className="px-2 py-0.5 rounded-full bg-[#F1F5F9] border border-[#E2E8F0] text-[#64748B] text-[10px] font-semibold">
                             {app.flagsCount.info} Info
                           </span>
                         )}
                         {app.flagsCount.critical === 0 &&
                           app.flagsCount.warning === 0 &&
                           app.flagsCount.info === 0 && (
-                            <span className="text-[#166534] text-[11px] font-medium">
-                              0 Discrepancies
+                            <span className="text-[#166534] text-xs font-bold flex items-center gap-1">
+                              ✓ Zero Defects
                             </span>
                           )}
                       </div>
                     </td>
 
+                    {/* Column 7: Action */}
                     <td className="py-3.5 px-4 text-right whitespace-nowrap">
                       <button
                         onClick={(e) => {
                           e.stopPropagation()
                           onSelectApplication(app)
                         }}
-                        className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-[#2563EB] border border-blue-200 text-xs font-medium transition-colors"
+                        className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-[#2563EB] border border-blue-200 text-xs font-bold transition-colors shadow-2xs"
                       >
                         <span>Review</span>
                         <ArrowUpRight className="w-3.5 h-3.5" />
