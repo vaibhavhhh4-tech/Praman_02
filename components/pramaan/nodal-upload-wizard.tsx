@@ -84,8 +84,8 @@ export function NodalUploadWizard({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-6">
           {/* Left 5 Cols: Upload Bundle */}
           <div className="lg:col-span-5 space-y-4">
-            <div className="rounded-2xl p-5 bg-slate-950/80 border border-dashed border-cyan-400/40 text-center space-y-3">
-              <div className="w-12 h-12 rounded-2xl bg-cyan-500/15 border border-cyan-400/30 flex items-center justify-center mx-auto text-cyan-300">
+            <div className="rounded-2xl p-5 bg-slate-950/80 border border-dashed border-orange-400/40 text-center space-y-3">
+              <div className="w-12 h-12 rounded-2xl bg-orange-500/15 border border-orange-400/30 flex items-center justify-center mx-auto text-orange-300">
                 <UploadCloud className="w-6 h-6" />
               </div>
               <div>
@@ -104,26 +104,26 @@ export function NodalUploadWizard({
                   <span className="text-slate-200">
                     1. Fire_Safety_NOC_2026.pdf
                   </span>
-                  <span className="text-cyan-300">2.4 MB • 300 DPI</span>
+                  <span className="text-orange-300">2.4 MB • 300 DPI</span>
                 </div>
                 <div className="p-3 rounded-xl bg-slate-900/90 border border-white/10 flex items-center justify-between text-xs font-mono">
                   <span className="text-slate-200">
                     2. Architect_Land_Cert.pdf
                   </span>
-                  <span className="text-cyan-300">4.1 MB • Signed</span>
+                  <span className="text-orange-300">4.1 MB • Signed</span>
                 </div>
                 <div className="p-3 rounded-xl bg-slate-900/90 border border-white/10 flex items-center justify-between text-xs font-mono">
                   <span className="text-slate-200">
                     3. Geotagged_Lab_Frames.zip
                   </span>
-                  <span className="text-cyan-300">18 EXIF Photos</span>
+                  <span className="text-orange-300">18 EXIF Photos</span>
                 </div>
               </div>
 
               <button
                 onClick={handleRunPreCheck}
                 disabled={isRunningPreCheck}
-                className="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-cyan-400 to-emerald-400 text-slate-950 font-mono text-xs font-bold shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:brightness-110 transition-all flex items-center justify-center gap-2"
+                className="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-orange-400 to-emerald-400 text-slate-950 font-mono text-xs font-bold shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:brightness-110 transition-all flex items-center justify-center gap-2"
               >
                 {isRunningPreCheck ? (
                   <>
@@ -145,7 +145,7 @@ export function NodalUploadWizard({
             <div className="rounded-2xl p-5 bg-slate-950/85 border border-white/10 space-y-4 h-full flex flex-col justify-between">
               <div>
                 <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-white/10">
-                  <span className="text-xs font-mono uppercase text-cyan-300 font-bold">
+                  <span className="text-xs font-mono uppercase text-orange-300 font-bold">
                     PRE-SUBMISSION AI READINESS REPORT
                   </span>
                   {selectedPreset === 'apex' ? (
@@ -223,7 +223,7 @@ export function NodalUploadWizard({
                 </span>
                 <button
                   onClick={onInspectInWorkstation}
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-cyan-500/20 hover:bg-cyan-400 text-cyan-200 hover:text-slate-950 border border-cyan-400/50 font-mono text-xs font-bold transition-all"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-orange-500/20 hover:bg-orange-400 text-orange-200 hover:text-slate-950 border border-orange-400/50 font-mono text-xs font-bold transition-all"
                 >
                   <span>Open in Split-Screen Evidence Workstation</span>
                   <ArrowRight className="w-3.5 h-3.5" />

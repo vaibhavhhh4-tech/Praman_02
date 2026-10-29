@@ -232,7 +232,7 @@ export default function AictePramaanAiPage() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed top-28 right-6 z-50 max-w-md rounded-2xl bg-slate-900/95 backdrop-blur-2xl border border-cyan-400/50 p-4 shadow-[0_0_35px_rgba(6,182,212,0.4)] flex items-start gap-3"
+            className="fixed top-28 right-6 z-50 max-w-md rounded-2xl bg-slate-900/95 backdrop-blur-2xl border border-orange-400/50 p-4 shadow-[0_0_35px_rgba(6,182,212,0.4)] flex items-start gap-3"
           >
             <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
             <div className="text-xs font-mono text-slate-100 leading-relaxed">
@@ -264,16 +264,16 @@ export default function AictePramaanAiPage() {
                       onClick={() => setActiveSubTab(tab.id)}
                       className={`relative flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-mono transition-all ${
                         isActive
-                          ? 'bg-gradient-to-r from-cyan-500/25 via-cyan-500/15 to-emerald-500/20 text-white border border-cyan-400/60 shadow-[0_0_20px_rgba(6,182,212,0.3)] font-bold'
+                          ? 'bg-gradient-to-r from-orange-500/25 via-orange-500/15 to-emerald-500/20 text-white border border-orange-400/60 shadow-[0_0_20px_rgba(6,182,212,0.3)] font-bold'
                           : 'text-slate-400 hover:text-white hover:bg-white/5 border border-transparent'
                       }`}
                     >
-                      <span className="text-cyan-400">{tab.icon}</span>
+                      <span className="text-orange-400">{tab.icon}</span>
                       <span>{tab.label}</span>
                       <span
                         className={`px-2 py-0.5 rounded-full text-[10px] ${
                           isActive
-                            ? 'bg-cyan-400 text-slate-950 font-extrabold'
+                            ? 'bg-orange-400 text-slate-950 font-extrabold'
                             : 'bg-slate-950 text-slate-400'
                         }`}
                       >

@@ -165,10 +165,10 @@ export const STATUTORY_STATES: {
     state: 'Manual Review Required',
     label: 'Manual Review Required',
     shortDesc: 'Infrastructure gap or EVC physical inspection needed',
-    colorClass: 'text-cyan-300',
-    bgClass: 'bg-cyan-500/15',
-    borderClass: 'border-cyan-400/45 shadow-[0_0_15px_rgba(6,182,212,0.25)]',
-    dotClass: 'bg-cyan-400',
+    colorClass: 'text-orange-300',
+    bgClass: 'bg-orange-500/15',
+    borderClass: 'border-orange-400/45 shadow-[0_0_15px_rgba(6,182,212,0.25)]',
+    dotClass: 'bg-orange-400',
   },
 ]
 

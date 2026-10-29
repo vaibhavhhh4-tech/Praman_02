@@ -72,11 +72,11 @@ export function ForensicAuditLedger({ logs }: ForensicAuditLedgerProps) {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.25, delay: idx * 0.05 }}
-              className="rounded-2xl p-4 bg-slate-950/70 border border-white/10 hover:border-cyan-400/40 transition-all flex flex-col lg:flex-row lg:items-center justify-between gap-4"
+              className="rounded-2xl p-4 bg-slate-950/70 border border-white/10 hover:border-orange-400/40 transition-all flex flex-col lg:flex-row lg:items-center justify-between gap-4"
             >
               <div className="space-y-1.5">
                 <div className="flex flex-wrap items-center gap-2.5 text-xs font-mono">
-                  <span className="px-2 py-0.5 rounded bg-cyan-500/15 text-cyan-300 border border-cyan-400/30 font-bold">
+                  <span className="px-2 py-0.5 rounded bg-orange-500/15 text-orange-300 border border-orange-400/30 font-bold">
                     {entry.pid}
                   </span>
                   <span className="text-white font-sans font-bold text-sm">
@@ -84,7 +84,7 @@ export function ForensicAuditLedger({ logs }: ForensicAuditLedgerProps) {
                   </span>
                   <span className="text-slate-500">•</span>
                   <span className="text-slate-400 flex items-center gap-1">
-                    <Clock className="w-3 h-3 text-cyan-400" />
+                    <Clock className="w-3 h-3 text-orange-400" />
                     {entry.timestamp}
                   </span>
                 </div>
@@ -106,7 +106,7 @@ export function ForensicAuditLedger({ logs }: ForensicAuditLedgerProps) {
               <div className="flex flex-col sm:flex-row lg:flex-col items-start sm:items-center lg:items-end justify-between gap-2 shrink-0">
                 <StatutoryBadge state={entry.resultingState} size="sm" />
                 <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-900 border border-white/10 font-mono text-[10px] text-slate-400">
-                  <Hash className="w-3 h-3 text-cyan-400" />
+                  <Hash className="w-3 h-3 text-orange-400" />
                   <span>SHA-256: {entry.sha256Hash}</span>
                 </div>
               </div>
